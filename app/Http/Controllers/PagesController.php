@@ -8,26 +8,26 @@ class PagesController extends BaseController
 {
     public function about()
     {
-        return view('pages.informations.about');
+        return view('pages.about');
     }
 
     public function client()
     {
-        return view('pages.informations.client');
+        return view('pages.client');
     }
 
     public function condition()
     {
-        return view('pages.informations.condition');
+        return view('pages.condition');
     }
 
     public function contact()
     {
-        return view('pages.informations.contact');
+        return view('pages.contact');
     }
 
     public function finance()
     {
-        return view('pages.informations.finance');
+        return view('pages.finance');
     }
 }
