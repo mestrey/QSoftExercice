@@ -7,11 +7,11 @@
             <p class="text-3xl text-black font-bold mb-4">Информация</p>
             <nav>
                 <ul class="list-inside  bullet-list-item">
-                    <li><a class="text-gray-600 hover:text-orange" href="inner.html">О компании</a></li>
-                    <li><a class="text-orange cursor-default" href="inner.html">Контактная информация</a></li>
-                    <li><a class="text-gray-600 hover:text-orange" href="inner.html">Условия продаж</a></li>
-                    <li><a class="text-gray-600 hover:text-orange" href="inner.html">Финансовый отдел</a></li>
-                    <li><a class="text-gray-600 hover:text-orange" href="inner.html">Для клиентов</a></li>
+                    <li><a class="{{ request()->is('about') ? 'text-orange cursor-default' : 'text-gray-600 hover:text-orange' }}" href="/about">О компании</a></li>
+                    <li><a class="{{ request()->is('contact') ? 'text-orange cursor-default' : 'text-gray-600 hover:text-orange' }}" href="/contact">Контактная информация</a></li>
+                    <li><a class="{{ request()->is('condition') ? 'text-orange cursor-default' : 'text-gray-600 hover:text-orange' }}" href="/condition">Условия продаж</a></li>
+                    <li><a class="{{ request()->is('finance') ? 'text-orange cursor-default' : 'text-gray-600 hover:text-orange' }}" href="/finance">Финансовый отдел</a></li>
+                    <li><a class="{{ request()->is('client') ? 'text-orange cursor-default' : 'text-gray-600 hover:text-orange' }}" href="/client">Для клиентов</a></li>
                 </ul>
             </nav>
         </div>

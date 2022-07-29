@@ -8,7 +8,7 @@
     <x-panels.styles />
     <x-panels.scripts />
 
-    <title>Рога и Сила - Главная страница</title>
+    <title>Рога и Сила - @yield('title')</title>
 
     <link href="{{ asset('favicon.ico') }}" rel="shortcut icon" type="image/x-icon">
 </head>
