@@ -3,13 +3,19 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Routing\Controller as BaseController;
+use Illuminate\Support\Facades\DB;
 
 class PagesController extends BaseController
 {
     public function index()
     {
+        $articles = DB::table('articles')
+            ->latest('published_at')
+            ->get()
+            ->take(3);
+
         return view('pages.homepage', [
-            'articles' => (new ArticleController())->getArticles()
+            'articles' => $articles
         ]);
     }
 
