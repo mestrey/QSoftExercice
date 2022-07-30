@@ -6,6 +6,13 @@ use Illuminate\Routing\Controller as BaseController;
 
 class PagesController extends BaseController
 {
+    public function index()
+    {
+        return view('pages.homepage', [
+            'articles' => (new ArticleController())->getArticles()
+        ]);
+    }
+
     public function about()
     {
         return view('pages.about');

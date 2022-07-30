@@ -14,9 +14,7 @@ use App\Http\Controllers\PagesController;
 |
 */
 
-Route::get('/', function () {
-    return view('pages.homepage');
-});
+Route::get('/', [PagesController::class, 'index'])->name('homepage');
 
 Route::get('/about', [PagesController::class, 'about'])->name('about');
 Route::get('/condition', [PagesController::class, 'condition'])->name('condition');
