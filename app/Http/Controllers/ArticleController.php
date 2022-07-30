@@ -13,7 +13,13 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        //
+        $articles = DB::table('articles')
+            ->latest('published_at')
+            ->get();
+
+        return view('pages.news', [
+            'articles' => $articles
+        ]);
     }
 
     /**

@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
+use App\Http\Controllers\ArticleController;
 
 /*
 |--------------------------------------------------------------------------
@@ -21,3 +22,5 @@ Route::get('/condition', [PagesController::class, 'condition'])->name('condition
 Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::get('/finance', [PagesController::class, 'finance'])->name('finance');
 Route::get('/client', [PagesController::class, 'client'])->name('client');
+
+Route::get('/news', [ArticleController::class, 'index'])->name('news');
