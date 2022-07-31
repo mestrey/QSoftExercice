@@ -18,7 +18,7 @@ class ArticleController extends Controller
             ->latest('published_at')
             ->get();
 
-        return view('pages.news', [
+        return view('pages.articles', [
             'articles' => $articles
         ]);
     }

@@ -23,4 +23,4 @@ Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::get('/finance', [PagesController::class, 'finance'])->name('finance');
 Route::get('/client', [PagesController::class, 'client'])->name('client');
 
-Route::get('/news', [ArticleController::class, 'index'])->name('news');
+Route::get('/articles', [ArticleController::class, 'index'])->name('articles');
