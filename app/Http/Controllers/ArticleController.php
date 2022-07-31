@@ -15,6 +15,7 @@ class ArticleController extends Controller
     public function index()
     {
         $articles = DB::table('articles')
+            ->whereNotNull('published_at')
             ->latest('published_at')
             ->get();
 

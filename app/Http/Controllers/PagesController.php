@@ -10,6 +10,7 @@ class PagesController extends BaseController
     public function index()
     {
         $articles = DB::table('articles')
+            ->whereNotNull('published_at')
             ->latest('published_at')
             ->get()
             ->take(3);
