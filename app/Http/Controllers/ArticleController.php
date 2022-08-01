@@ -47,15 +47,11 @@ class ArticleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Article $article)
     {
-        $article = Article::where('slug', $id)
-            ->get()
-            ->first();
-
         return view('pages.article', [
             'article' => $article
         ]);
