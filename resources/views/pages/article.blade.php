@@ -13,7 +13,7 @@
     </div>
 
     <p>{{ $article->description }}</p>
-    <p>{{ $article->body }}</p>
+    <p>{{ strip_tags($article->body) }}</p>
 </div>
 
 <div class="mt-4">
