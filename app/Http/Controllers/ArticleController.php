@@ -52,11 +52,9 @@ class ArticleController extends Controller
      */
     public function show($id)
     {
-        $article = DB::table('articles')
-            ->where('slug', $id)
-            ->get();
-
-        var_dump($article);
+        $article = Article::where('slug', $id)
+            ->get()
+            ->first();
 
         return view('pages.article', [
             'article' => $article
