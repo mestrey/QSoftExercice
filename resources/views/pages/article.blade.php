@@ -5,6 +5,14 @@
 @section('information')
 
 <div class="space-y-4">
+    @if (session('created'))
+    <div class="my-4">
+        <div class="px-4 py-3 leading-normal text-green-700 bg-green-100 rounded-lg" role="alert">
+            <p>{{ session('created') }}</p>
+        </div>
+    </div>
+    @endif
+
     <img src="{{ asset('pictures/car_new_stinger.png') }}" alt="" title="">
 
     <div>
