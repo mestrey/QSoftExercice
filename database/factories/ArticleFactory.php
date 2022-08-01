@@ -19,14 +19,21 @@ class ArticleFactory extends Factory
      */
     public function definition()
     {
-        $faker = \Faker\Factory::create('ru_RU');
-        $title = $faker->name;
         return [
-            'slug' => 'article/' . $title,
-            'title' => $title,
-            'description' => $faker->realText(50),
-            'body' => $faker->realText(200),
-            'published_at' => $faker->dateTime($max = 'now')
+            'slug' => $this->faker->unique->slug(3),
+            'title' => $this->faker->name,
+            'description' => $this->faker->realText(50),
+            'body' => $this->faker->realText(200),
+            'published_at' => $this->faker->boolean(50) ? $this->faker->dateTime('now') : null
         ];
+    }
+
+    public function published()
+    {
+        return $this->state(function () {
+            return [
+                'published_at' => $this->faker->dateTime('now'),
+            ];
+        });
     }
 }

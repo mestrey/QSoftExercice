@@ -1,9 +1,5 @@
 @extends('layouts.app')
 
-@php
-Carbon\Carbon::setLocale('ru');
-@endphp
-
 @section('title', 'Главная страница')
 
 @section('content')

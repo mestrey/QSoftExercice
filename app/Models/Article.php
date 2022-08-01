@@ -9,8 +9,6 @@ class Article extends Model
 {
     use HasFactory;
 
-    protected $table = 'articles';
-
     protected $fillable = [
         'slug',
         'title',
@@ -24,5 +22,7 @@ class Article extends Model
      *
      * @var array
      */
-    protected $dates = ['published_at'];
+    protected $casts = [
+        'published_at' => 'datetime',
+    ];
 }
