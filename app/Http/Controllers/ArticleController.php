@@ -16,7 +16,6 @@ class ArticleController extends Controller
     {
         $articles = Article::whereNotNull('published_at')
             ->latest('published_at')
-            ->take(3)
             ->get();
 
         return view('pages.articles', [
