@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Carbon\Carbon;
 
 class StoreArticleRequest extends FormRequest
 {
@@ -27,5 +28,10 @@ class StoreArticleRequest extends FormRequest
             'title' => 'bail|required|max:255|unique:articles' . ($this->article ? ",title,{$this->article->id}" : ''),
             'description' => 'required|max:255'
         ];
+    }
+
+    public function isPublished()
+    {
+        return (bool)$this->published ? Carbon::now() : null;
     }
 }

@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
@@ -50,7 +48,7 @@ class ArticleController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'body' => $request->body,
-            'published_at' => (bool)$request->published ? Carbon::now() : null,
+            'published_at' => $request->isPublished(),
             'slug' => Str::slug($request->title)
         ]);
 
@@ -98,7 +96,7 @@ class ArticleController extends Controller
         $article->slug = Str::slug($request->title);
         $article->description = $request->description;
         $article->body = $request->body;
-        $article->published_at = (bool)$request->published ? Carbon::now() : null;
+        $article->published_at = $request->isPublished();
 
         $article->save();
 
@@ -114,6 +112,6 @@ class ArticleController extends Controller
     public function destroy(Article $article)
     {
         $article->delete();
-        return redirect()->route('articles', $article)->with('success', 'Успешно удалено!');
+        return redirect()->route('articles.index', $article)->with('success', 'Успешно удалено!');
     }
 }
