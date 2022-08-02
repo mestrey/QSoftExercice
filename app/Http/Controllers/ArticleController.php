@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Http\Requests\StoreArticleRequest;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
@@ -34,37 +36,22 @@ class ArticleController extends Controller
         return view('pages.create');
     }
 
-    private function slugify($text)
-    {
-        $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
-        $text = trim($text, '-');
-        if (function_exists('transliterator_transliterate')) $text = transliterator_transliterate('Any-Latin; Latin-ASCII', $text);
-        $text = iconv('utf-8', 'ASCII//TRANSLIT//IGNORE', $text);
-        $text = strtolower($text);
-        $text = preg_replace('~[^-\w]+~', '', $text);
-
-        return $text;
-    }
-
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreArticleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreArticleRequest $request)
     {
-        $request->validate([
-            'title' => 'bail|required|unique:articles|max:255',
-            'description' => 'required|max:255'
-        ]);
+        $request->validated();
 
         $article = Article::create([
             'title' => $request->title,
             'description' => $request->description,
             'body' => $request->body,
             'published_at' => (bool)$request->published ? Carbon::now() : null,
-            'slug' => $this->slugify($request->title)
+            'slug' => Str::slug($request->title)
         ]);
 
         return redirect()->route('articles.show', $article)->with('created', 'Успешно создано!');
