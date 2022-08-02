@@ -11,32 +11,16 @@
             @csrf
             <div class="mt-8 max-w-md">
                 <div class="grid grid-cols-1 gap-6">
-                    <div class="block">
-                        <label for="title" class="text-gray-700 font-bold">Название новости</label>
-                        <input value="{{ old('title') }}" id="title" name="title" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="">
-                        @error('title')
-                        <span class="text-xs italic text-red-600">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="block">
-                        <label for="description" class="text-gray-700 font-bold">Краткое описание новости</label>
-                        <input value="{{ old('description') }}" id="description" name="description" type="text" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" placeholder="">
-                        @error('description')
-                        <span class="text-xs italic text-red-600">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div class="block">
-                        <label for="body" class="text-gray-700">Детальное описание</label>
-                        <textarea id="body" name="body" class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50" rows="3"></textarea>
-                    </div>
-                    <div class="block">
-                        <div class="mt-2">
-                            <label class="inline-flex items-center cursor-pointer">
-                                <input name="published" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:border-indigo-300 focus:ring focus:ring-offset-0 focus:ring-indigo-200 focus:ring-opacity-50" checked="yes">
-                                <span class="ml-2">Опубликован</span>
-                            </label>
-                        </div>
-                    </div>
+                    <x-input.group for="title_field" error="title" text="Название новости">
+                        <x-input.text id="title_field" name="title" />
+                    </x-input.group>
+                    <x-input.group for="description_field" error="description" text="Краткое описание новости">
+                        <x-input.text id="description_field" name="description" />
+                    </x-input.group>
+                    <x-input.group for="body_field" error="body" text="Детальное описание">
+                        <x-input.textarea id="body_field" name="body" />
+                    </x-input.group>
+                    <x-input.checkbox name="published" text="Опубликован" />
                     <div class="block">
                         <button class="inline-block bg-orange hover:bg-opacity-70 focus:outline-none text-white font-bold py-2 px-4 rounded">
                             Создать
