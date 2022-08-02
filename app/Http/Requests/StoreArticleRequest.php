@@ -24,7 +24,7 @@ class StoreArticleRequest extends FormRequest
     public function rules()
     {
         return [
-            'title' => 'bail|required|unique:articles|max:255',
+            'title' => 'bail|required|max:255|unique:articles' . ($this->article ? ",title,{$this->article->id}" : ''),
             'description' => 'required|max:255'
         ];
     }

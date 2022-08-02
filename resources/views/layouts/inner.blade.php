@@ -30,6 +30,13 @@
         </aside>
         <div class="col-span-4 sm:col-span-3 lg:col-span-4 p-4">
             <h1 class="text-black text-3xl font-bold mb-4">@yield('title')</h1>
+            @if (session('success'))
+            <div class="my-4">
+                <div class="px-4 py-3 leading-normal text-green-700 bg-green-100 rounded-lg" role="alert">
+                    <p>{{ session('success') }}</p>
+                </div>
+            </div>
+            @endif
             @yield('information')
         </div>
     </div>
