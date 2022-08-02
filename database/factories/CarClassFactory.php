@@ -16,8 +16,10 @@ class CarClassFactory extends Factory
      */
     public function definition()
     {
+        $this->faker->addProvider(new \Faker\Provider\Fakecar($this->faker));
+
         return [
-            'name' => $this->faker->name
+            'name' => $this->faker->vehicleArray['model']
         ];
     }
 }

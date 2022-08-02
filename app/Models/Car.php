@@ -23,4 +23,19 @@ class Car extends Model
         'car_engine_id',
         'is_new',
     ];
+
+    public function car_class()
+    {
+        return $this->belongsTo(CarClass::class, 'car_class_id');
+    }
+
+    public function car_body()
+    {
+        return $this->belongsTo(CarBody::class, 'car_body_id');
+    }
+
+    public function car_engine()
+    {
+        return $this->belongsTo(CarEngine::class, 'car_engine_id');
+    }
 }
