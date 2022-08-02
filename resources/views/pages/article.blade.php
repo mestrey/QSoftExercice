@@ -5,6 +5,14 @@
 @section('information')
 
 <div class="space-y-4">
+    @if (session('created'))
+    <div class="my-4">
+        <div class="px-4 py-3 leading-normal text-green-700 bg-green-100 rounded-lg" role="alert">
+            <p>{{ session('created') }}</p>
+        </div>
+    </div>
+    @endif
+
     <img src="{{ asset('pictures/car_new_stinger.png') }}" alt="" title="">
 
     <div>
@@ -12,8 +20,7 @@
         <span class="text-sm text-white italic rounded bg-orange px-2">Теги</span>
     </div>
 
-    <p>{{ $article->description }}</p>
-    <p>{{ strip_tags($article->body) }}</p>
+    {!! $article->body !!}
 </div>
 
 <div class="mt-4">

@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Http\Requests\StoreArticleRequest;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
@@ -30,18 +33,28 @@ class ArticleController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Http\Requests\StoreArticleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreArticleRequest $request)
     {
-        //
+        $request->validated();
+
+        $article = Article::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'body' => $request->body,
+            'published_at' => (bool)$request->published ? Carbon::now() : null,
+            'slug' => Str::slug($request->title)
+        ]);
+
+        return redirect()->route('articles.show', $article)->with('created', 'Успешно создано!');
     }
 
     /**
