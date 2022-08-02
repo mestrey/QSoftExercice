@@ -24,3 +24,5 @@ Route::get('/finance', [PagesController::class, 'finance'])->name('finance');
 Route::get('/client', [PagesController::class, 'client'])->name('client');
 
 Route::resource('articles', ArticleController::class);
+
+Route::get('/catalog', [PagesController::class, 'catalog'])->name('catalog');

@@ -25,6 +25,15 @@ class PagesController extends BaseController
         ]);
     }
 
+    public function catalog()
+    {
+        $cars = Car::get();
+
+        return view('pages.catalog', [
+            'cars' => $cars
+        ]);
+    }
+
     public function about()
     {
         return view('pages.about');
