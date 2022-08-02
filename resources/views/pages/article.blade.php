@@ -20,8 +20,7 @@
         <span class="text-sm text-white italic rounded bg-orange px-2">Теги</span>
     </div>
 
-    <p>{{ $article->description }}</p>
-    <p>{{ strip_tags($article->body) }}</p>
+    {!! $article->body !!}
 </div>
 
 <div class="mt-4">
