@@ -17,7 +17,6 @@
         </div>
     </section>
 
-
     <div class="space-y-4 sm:space-y-0 sm:flex sm:justify-between items-center py-6 px-2 sm:px-0">
         <div class="copy pr-8">© 2021 Рога &amp; Сила. Продажа автомобилей.</div>
         <div class="text-right">
