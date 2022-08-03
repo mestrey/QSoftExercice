@@ -13,8 +13,8 @@ class Tag extends Model
         'name',
     ];
 
-    public function taggable()
+    public function articles()
     {
-        return $this->morphTo();
+        return $this->morphedByMany(Article::class, 'taggable');
     }
 }
