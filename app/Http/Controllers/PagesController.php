@@ -36,37 +36,35 @@ class PagesController extends BaseController
         $cars = Car::with('carEngine', 'carClass')->get();
 
         $averagePrice = $cars->avg('price');
-        dump($averagePrice);
-
         $averagePriceDiscounted = $cars->whereNotNull('old_price')->avg('price');
-        dump($averagePriceDiscounted);
-
         $mostExpensive = $cars->max('price');
-        dump($mostExpensive);
 
         $salons = $cars->pluck('salon');
-        dump($salons);
-
         $engines = $cars->pluck('carEngine.name')->sort();
-        dump($engines);
 
         $classes = $cars->pluck('carClass.name')->keyBy(function ($value, $key) {
             return Str::slug($value);
         })->sort();
-        dump($classes);
 
         $discounted = $cars->whereNotNull('old_price')->reject(function ($e) {
             $str = $e->name . $e->carEngine->name . $e->kpp;
             return !str_contains($str, '5') && !str_contains($str, '6');
         });
-        dump($discounted);
 
         $bodies = $cars->whereNull('old_price')->pluck('car_body_id', 'carBody.name')->map(function ($e) use ($cars) {
             return $cars->where('car_body_id', $e)->avg('price');
         })->sort();
-        dump($bodies);
 
-        return view('pages.client');
+        return view('pages.client', [
+            'averagePrice' => $averagePrice,
+            'averagePriceDiscounted' => $averagePriceDiscounted,
+            'mostExpensive' => $mostExpensive,
+            'salons' => $salons,
+            'engines' => $engines,
+            'classes' => $classes,
+            'discounted' => $discounted,
+            'bodies' => $bodies,
+        ]);
     }
 
     public function condition()
