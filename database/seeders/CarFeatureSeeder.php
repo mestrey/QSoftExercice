@@ -2,10 +2,12 @@
 
 namespace Database\Seeders;
 
-use App\Models\Article;
+use App\Models\CarBody;
+use App\Models\CarClass;
+use App\Models\CarEngine;
 use Illuminate\Database\Seeder;
 
-class ArticleSeeder extends Seeder
+class CarFeatureSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -14,12 +16,15 @@ class ArticleSeeder extends Seeder
      */
     public function run()
     {
-        Article::factory()
+        CarBody::factory()
             ->count(5)
-            ->published()
             ->create();
 
-        Article::factory()
+        CarClass::factory()
+            ->count(5)
+            ->create();
+
+        CarEngine::factory()
             ->count(5)
             ->create();
     }

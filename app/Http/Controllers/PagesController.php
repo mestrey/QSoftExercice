@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Article;
+use App\Models\Car;
 use Illuminate\Routing\Controller as BaseController;
 
 class PagesController extends BaseController
@@ -14,8 +15,13 @@ class PagesController extends BaseController
             ->take(3)
             ->get();
 
+        $cars = Car::where('is_new', 0)
+            ->take(4)
+            ->get();
+
         return view('pages.homepage', [
-            'articles' => $articles
+            'articles' => $articles,
+            'cars' => $cars
         ]);
     }
 
