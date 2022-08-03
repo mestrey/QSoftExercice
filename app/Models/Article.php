@@ -30,4 +30,9 @@ class Article extends Model
     {
         return 'slug';
     }
+
+    public function tags()
+    {
+        return $this->morphMany(Tag::class, 'taggable');
+    }
 }
