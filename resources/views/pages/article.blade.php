@@ -11,10 +11,7 @@
 
     <img src="{{ asset('pictures/car_new_stinger.png') }}" alt="" title="">
 
-    <div>
-        <span class="text-sm text-white italic rounded bg-orange px-2">Это</span>
-        <span class="text-sm text-white italic rounded bg-orange px-2">Теги</span>
-    </div>
+    <x-article.tags :tags="$article->tags" />
 
     {!! $article->body !!}
 </div>

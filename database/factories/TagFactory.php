@@ -17,13 +17,10 @@ class TagFactory extends Factory
      */
     public function definition()
     {
-        $taggables = [Article::class];
-
-        $taggableType = $this->faker->randomElement($taggables);
-        $taggable = $this->factoryForModel($taggableType)->create();
+        $taggable = Article::get()->random();
 
         return [
-            'taggable_type' => $taggableType,
+            'taggable_type' => Article::class,
             'taggable_id' => $taggable->id,
             'name' => $this->faker->unique()->word()
         ];

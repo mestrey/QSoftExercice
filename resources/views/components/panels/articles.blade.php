@@ -13,9 +13,7 @@
                 <a class="hover:text-orange" href="{{ route('articles.show', $article) }}">{{ $article->description }}</a>
             </p>
         </div>
-        <div>
-            <span class="text-sm text-white italic rounded bg-orange px-2">Киа Seed</span>
-        </div>
+        <x-article.tags :tags="$article->tags" />
         <div class="flex items-center">
             <p class="text-sm text-gray-400 italic">{{ $article->published_at->translatedFormat('d M Y') }}</p>
         </div>
