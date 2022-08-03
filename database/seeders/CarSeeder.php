@@ -6,7 +6,6 @@ use App\Models\Car;
 use App\Models\CarBody;
 use App\Models\CarClass;
 use App\Models\CarEngine;
-use Illuminate\Database\Eloquent\Factories\Sequence;
 use Illuminate\Database\Seeder;
 
 class CarSeeder extends Seeder
