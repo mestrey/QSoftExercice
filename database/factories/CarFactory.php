@@ -27,12 +27,12 @@ class CarFactory extends Factory
             'price' => $this->faker->numberBetween(1000000, 3000000),
             'old_price' => $this->faker->numberBetween(3000000, 5000000),
             'salon' => $this->faker->vehicleType(),
-            'car_class_id' => $this->faker->numberBetween(1, CarClass::count()),
             'kpp' => $this->faker->vehicleGearBoxType,
             'year' => $this->faker->numberBetween(1998, 2017),
             'color' => $this->faker->colorName(),
-            'car_body_id' => $this->faker->numberBetween(1, CarBody::count()),
-            'car_engine_id' => $this->faker->numberBetween(1, CarEngine::count()),
+            'car_body_id' => CarBody::factory(),
+            'car_class_id' => CarClass::factory(),
+            'car_engine_id' => CarEngine::factory(),
             'is_new' => $this->faker->boolean(),
         ];
     }

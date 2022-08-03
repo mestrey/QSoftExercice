@@ -13,9 +13,11 @@
             <span class="inline-block">
                 {{ number_format($car->price, 0, '.', ' ') }} ₽
             </span>
+            @if ($car->old_price)
             <span class="inline-block line-through pl-6 text-gray-400">
                 {{ number_format($car->old_price, 0, '.', ' ') }} ₽
             </span>
+            @endif
         </p>
     </div>
 </div>

@@ -16,9 +16,11 @@
             <div class="col-span-1 lg:col-span-2">
                 <div class="space-y-4 w-full">
                     <div class="block px-4">
+                        @if ($car->old_price)
                         <p class="text-base line-through text-gray-400">
                             {{ number_format($car->old_price, 0, '.', ' ') }} ₽
                         </p>
+                        @endif
                         <p class="font-bold text-2xl text-orange">
                             {{ number_format($car->price, 0, '.', ' ') }} ₽
                         </p>
@@ -52,7 +54,7 @@
                                 </tr>
                                 <tr>
                                     <td class="py-2 text-gray-600 w-1/2">Класс:</td>
-                                    <td class="py-2 text-black font-bold w-1/2">{{ $car->car_class->name }}</td>
+                                    <td class="py-2 text-black font-bold w-1/2">{{ $car->carClass->name }}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2 text-gray-600 w-1/2">КПП:</td>
@@ -68,11 +70,11 @@
                                 </tr>
                                 <tr>
                                     <td class="py-2 text-gray-600 w-1/2">Кузов:</td>
-                                    <td class="py-2 text-black font-bold w-1/2">{{ $car->car_body->name }}</td>
+                                    <td class="py-2 text-black font-bold w-1/2">{{ $car->carBody->name }}</td>
                                 </tr>
                                 <tr>
                                     <td class="py-2 text-gray-600 w-1/2">Двигатель:</td>
-                                    <td class="py-2 text-black font-bold w-1/2">{{ $car->car_engine->name }}</td>
+                                    <td class="py-2 text-black font-bold w-1/2">{{ $car->carEngine->name }}</td>
                                 </tr>
                             </table>
                         </div>

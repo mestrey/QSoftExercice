@@ -24,17 +24,17 @@ class Car extends Model
         'is_new',
     ];
 
-    public function car_class()
+    public function carClass()
     {
         return $this->belongsTo(CarClass::class, 'car_class_id');
     }
 
-    public function car_body()
+    public function carBody()
     {
         return $this->belongsTo(CarBody::class, 'car_body_id');
     }
 
-    public function car_engine()
+    public function carEngine()
     {
         return $this->belongsTo(CarEngine::class, 'car_engine_id');
     }

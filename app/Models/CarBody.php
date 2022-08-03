@@ -12,4 +12,9 @@ class CarBody extends Model
     protected $fillable = [
         'name',
     ];
+
+    public function car()
+    {
+        return $this->belongsToMany(Car::class);
+    }
 }

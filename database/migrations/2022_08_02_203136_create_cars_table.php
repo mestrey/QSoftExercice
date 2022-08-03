@@ -1,5 +1,8 @@
 <?php
 
+use App\Models\CarBody;
+use App\Models\CarClass;
+use App\Models\CarEngine;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -20,21 +23,12 @@ return new class extends Migration
             $table->integer('price');
             $table->integer('old_price')->nullable();
             $table->text('salon')->nullable();
-            $table->foreignId('car_class_id')
-                ->nullable()
-                ->references('id')
-                ->on('car_classes');
             $table->text('kpp')->nullable();
             $table->integer('year')->nullable();
             $table->text('color')->nullable();
-            $table->foreignId('car_body_id')
-                ->nullable()
-                ->references('id')
-                ->on('car_bodies');
-            $table->foreignId('car_engine_id')
-                ->nullable()
-                ->references('id')
-                ->on('car_engines');
+            $table->foreignIdFor(CarBody::class)->nullable();
+            $table->foreignIdFor(CarClass::class)->nullable();
+            $table->foreignIdFor(CarEngine::class)->nullable();
             $table->boolean('is_new')->default(false);
             $table->timestamps();
         });
