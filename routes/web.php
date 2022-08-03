@@ -23,8 +23,4 @@ Route::get('/contact', [PagesController::class, 'contact'])->name('contact');
 Route::get('/finance', [PagesController::class, 'finance'])->name('finance');
 Route::get('/client', [PagesController::class, 'client'])->name('client');
 
-Route::get('/articles', [ArticleController::class, 'index'])->name('articles');
-Route::get('/articles/create', [ArticleController::class, 'create'])->name('articles.create');
-Route::get('/articles/{article}', [ArticleController::class, 'show'])->name('articles.show');
-
-Route::post('/articles', [ArticleController::class, 'store'])->name('articles.store');
+Route::resource('articles', ArticleController::class);
