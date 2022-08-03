@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
-use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
@@ -50,11 +48,11 @@ class ArticleController extends Controller
             'title' => $request->title,
             'description' => $request->description,
             'body' => $request->body,
-            'published_at' => (bool)$request->published ? Carbon::now() : null,
+            'published_at' => $request->isPublished(),
             'slug' => Str::slug($request->title)
         ]);
 
-        return redirect()->route('articles.show', $article)->with('created', 'Успешно создано!');
+        return redirect()->route('articles.show', $article)->with('success', 'Успешно создано!');
     }
 
     /**
@@ -73,34 +71,47 @@ class ArticleController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
+     * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Article $article)
     {
-        //
+        return view('pages.edit', [
+            'article' => $article
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Http\Requests\StoreArticleRequest  $request
+     * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(StoreArticleRequest $request, Article $article)
     {
-        //
+        $request->validated();
+
+        $article->title = $request->title;
+        $article->slug = Str::slug($request->title);
+        $article->description = $request->description;
+        $article->body = $request->body;
+        $article->published_at = $request->isPublished();
+
+        $article->save();
+
+        return redirect()->route('articles.show', $article)->with('success', 'Успешно редактировано!');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Article $article)
     {
-        //
+        $article->delete();
+        return redirect()->route('articles.index', $article)->with('success', 'Успешно удалено!');
     }
 }
