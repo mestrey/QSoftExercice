@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Article;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,11 +16,7 @@ class TagFactory extends Factory
      */
     public function definition()
     {
-        $taggable = Article::get()->random();
-
         return [
-            'taggable_type' => Article::class,
-            'taggable_id' => $taggable->id,
             'name' => $this->faker->unique()->word()
         ];
     }
