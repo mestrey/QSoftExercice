@@ -10,7 +10,7 @@
         <form action="{{ route('articles.show', $article) }}" method="POST">
             @csrf
             @method('PUT')
-            <x-article.form title="{{ old('title') ?? $article->title }}" description="{{ old('description') ?? $article->description }}" body="{{ old('body') ?? $article->body }}">
+            <x-article.form title="{{ old('title') ?? $article->title }}" description="{{ old('description') ?? $article->description }}" body="{{ old('body') ?? $article->body }}" tags="{{ old('tags') ?? $article->tags->pluck('name')->implode(',') }}">
                 <x-button.orange message="Сохранить" />
             </x-article.form>
         </form>

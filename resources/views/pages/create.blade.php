@@ -9,7 +9,7 @@
         <h1 class="text-black text-3xl font-bold mb-4">Создание новости</h1>
         <form action="{{ route('articles.store') }}" method="POST">
             @csrf
-            <x-article.form title="{{ old('title') }}" description="{{ old('description') }}" body="{{ old('body') }}">
+            <x-article.form title="{{ old('title') }}" description="{{ old('description') }}" body="{{ old('body') }}" tags="{{ old('tags') }}">
                 <x-button.orange message="Создать" />
             </x-article.form>
         </form>
