@@ -25,7 +25,7 @@ class CarFactory extends Factory
             'name' => $this->faker->vehicle,
             'body' => $this->faker->realText(50),
             'price' => $this->faker->numberBetween(1000000, 3000000),
-            'old_price' => $this->faker->numberBetween(3000000, 5000000),
+            'old_price' => $this->faker->boolean() ? $this->faker->numberBetween(3000000, 5000000) : null,
             'salon' => $this->faker->vehicleType(),
             'kpp' => $this->faker->vehicleGearBoxType,
             'year' => $this->faker->numberBetween(1998, 2017),
