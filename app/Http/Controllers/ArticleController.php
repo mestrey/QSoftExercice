@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
+use App\Http\Requests\TagRequest;
+use App\Services\TagsSynchronizer;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
@@ -43,6 +45,7 @@ class ArticleController extends Controller
     public function store(StoreArticleRequest $request)
     {
         $request->validated();
+        $tags = $request->tags ? (new TagRequest)->getCollection($request->tags) : collect();
 
         $article = Article::create([
             'title' => $request->title,
@@ -51,6 +54,8 @@ class ArticleController extends Controller
             'published_at' => $request->isPublished(),
             'slug' => Str::slug($request->title)
         ]);
+
+        (new TagsSynchronizer())->sync($tags, $article);
 
         return redirect()->route('articles.show', $article)->with('success', 'Успешно создано!');
     }
@@ -91,6 +96,7 @@ class ArticleController extends Controller
     public function update(StoreArticleRequest $request, Article $article)
     {
         $request->validated();
+        $tags = $request->tags ? (new TagRequest)->getCollection($request->tags) : collect();
 
         $article->title = $request->title;
         $article->slug = Str::slug($request->title);
@@ -99,6 +105,8 @@ class ArticleController extends Controller
         $article->published_at = $request->isPublished();
 
         $article->save();
+
+        (new TagsSynchronizer())->sync($tags, $article);
 
         return redirect()->route('articles.show', $article)->with('success', 'Успешно редактировано!');
     }
