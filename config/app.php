@@ -194,7 +194,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
-        App\Providers\TagsSynchronizerProvider::class
+
+        App\Providers\RepositoryServiceProvider::class
 
     ],
 
@@ -211,7 +212,6 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
         // 'ExampleClass' => App\Example\ExampleClass::class,
-        'TagsSynchronizer' => App\Services\TagsSynchronizer::class,
     ])->toArray(),
 
 ];

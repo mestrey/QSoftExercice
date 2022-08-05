@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\ArticlesRepositoryContract;
+use App\Contracts\CarsRepositoryContract;
 use App\Models\Article;
 use App\Models\Car;
 use Illuminate\Routing\Controller as BaseController;
@@ -9,16 +11,16 @@ use Illuminate\Support\Str;
 
 class PagesController extends BaseController
 {
+    public function __construct(
+        protected ArticlesRepositoryContract $articlesRepository,
+        protected CarsRepositoryContract $carsRepository
+    ) {
+    }
+
     public function index()
     {
-        $articles = Article::whereNotNull('published_at')
-            ->latest('published_at')
-            ->take(3)
-            ->get();
-
-        $cars = Car::where('is_new', 0)
-            ->take(4)
-            ->get();
+        $articles = $this->articlesRepository->getLatestPublishedArticles(3);
+        $cars = $this->carsRepository->getNewCars(4);
 
         return view('pages.homepage', [
             'articles' => $articles,
@@ -33,7 +35,7 @@ class PagesController extends BaseController
 
     public function client()
     {
-        $cars = Car::with('carEngine', 'carClass')->get();
+        $cars = $this->carsRepository->getAllFeaturedCars();
 
         $averagePrice = $cars->avg('price');
         $averagePriceDiscounted = $cars->whereNotNull('old_price')->avg('price');

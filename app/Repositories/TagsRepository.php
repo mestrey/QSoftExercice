@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Services;
+namespace App\Repositories;
 
+use App\Contracts\TagsRepositoryContract;
 use App\Interfaces\HasTags;
 use App\Models\Tag;
 use Illuminate\Support\Collection;
 
-class TagsSynchronizer
+class TagsRepository implements TagsRepositoryContract
 {
     public function sync(Collection $tags, HasTags $model)
     {
