@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\CarsRepositoryContract;
 use App\Models\Car;
 use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
+    public function __construct(
+        protected CarsRepositoryContract $carsRepository,
+    ) {
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = Car::get();
+        $cars = $this->carsRepository->getAllCars();
 
         return view('pages.catalog', [
             'cars' => $cars

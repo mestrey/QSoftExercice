@@ -2,19 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\ArticlesRepositoryContract;
+use App\Contracts\TagsRepositoryContract;
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\TagRequest;
-use App\Services\TagsSynchronizer;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
-    protected $tagsSynchronizer;
-
-    public function __construct(TagsSynchronizer $tagsSynchronizer)
-    {
-        $this->tagsSynchronizer = $tagsSynchronizer;
+    public function __construct(
+        protected TagsRepositoryContract $tagRepository,
+        protected ArticlesRepositoryContract $articleRepository
+    ) {
     }
 
     /**
@@ -24,12 +24,8 @@ class ArticleController extends Controller
      */
     public function index()
     {
-        $articles = Article::whereNotNull('published_at')
-            ->latest('published_at')
-            ->get();
-
         return view('pages.articles', [
-            'articles' => $articles
+            'articles' => $this->articleRepository->getAllLatestPublishedArticles()
         ]);
     }
 
@@ -54,7 +50,7 @@ class ArticleController extends Controller
         $request->validated();
         $tags = $tagRequest->tagsCollection();
 
-        $article = Article::create([
+        $article = $this->articleRepository->createArticle([
             'title' => $request->title,
             'description' => $request->description,
             'body' => $request->body,
@@ -62,7 +58,7 @@ class ArticleController extends Controller
             'slug' => Str::slug($request->title)
         ]);
 
-        $this->tagsSynchronizer->sync($tags, $article);
+        $this->tagRepository->sync($tags, $article);
 
         return redirect()->route('articles.show', $article)->with('success', 'Успешно создано!');
     }
@@ -105,15 +101,15 @@ class ArticleController extends Controller
         $request->validated();
         $tags = $tagRequest->tagsCollection();
 
-        $article->title = $request->title;
-        $article->slug = Str::slug($request->title);
-        $article->description = $request->description;
-        $article->body = $request->body;
-        $article->published_at = $request->isPublished();
+        $this->articleRepository->updateArticle($article, [
+            'title' => $request->title,
+            'description' => $request->description,
+            'body' => $request->body,
+            'published_at' => $request->isPublished(),
+            'slug' => Str::slug($request->title)
+        ]);
 
-        $article->save();
-
-        $this->tagsSynchronizer->sync($tags, $article);
+        $this->tagRepository->sync($tags, $article);
 
         return redirect()->route('articles.show', $article)->with('success', 'Успешно редактировано!');
     }
@@ -126,7 +122,7 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
-        $article->delete();
+        $this->articleRepository->deleteArticle($article);
         return redirect()->route('articles.index', $article)->with('success', 'Успешно удалено!');
     }
 }
