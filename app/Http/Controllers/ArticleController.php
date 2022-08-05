@@ -4,10 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
+use App\Http\Requests\TagRequest;
+use App\Services\TagsSynchronizer;
 use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
+    protected $tagsSynchronizer;
+
+    public function __construct(TagsSynchronizer $tagsSynchronizer)
+    {
+        $this->tagsSynchronizer = $tagsSynchronizer;
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -40,9 +49,10 @@ class ArticleController extends Controller
      * @param  \App\Http\Requests\StoreArticleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreArticleRequest $request)
+    public function store(StoreArticleRequest $request, TagRequest $tagRequest)
     {
         $request->validated();
+        $tags = $tagRequest->tagsCollection();
 
         $article = Article::create([
             'title' => $request->title,
@@ -51,6 +61,8 @@ class ArticleController extends Controller
             'published_at' => $request->isPublished(),
             'slug' => Str::slug($request->title)
         ]);
+
+        $this->tagsSynchronizer->sync($tags, $article);
 
         return redirect()->route('articles.show', $article)->with('success', 'Успешно создано!');
     }
@@ -88,9 +100,10 @@ class ArticleController extends Controller
      * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreArticleRequest $request, Article $article)
+    public function update(StoreArticleRequest $request, TagRequest $tagRequest, Article $article)
     {
         $request->validated();
+        $tags = $tagRequest->tagsCollection();
 
         $article->title = $request->title;
         $article->slug = Str::slug($request->title);
@@ -99,6 +112,8 @@ class ArticleController extends Controller
         $article->published_at = $request->isPublished();
 
         $article->save();
+
+        $this->tagsSynchronizer->sync($tags, $article);
 
         return redirect()->route('articles.show', $article)->with('success', 'Успешно редактировано!');
     }

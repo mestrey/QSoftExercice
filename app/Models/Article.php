@@ -2,10 +2,13 @@
 
 namespace App\Models;
 
+use App\Interfaces\HasTags;
+use App\Services\TagsSynchronizer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
-class Article extends Model
+class Article extends Model implements HasTags
 {
     use HasFactory;
 
@@ -29,5 +32,10 @@ class Article extends Model
     public function getRouteKeyName()
     {
         return 'slug';
+    }
+
+    public function tags(): MorphToMany
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
     }
 }
