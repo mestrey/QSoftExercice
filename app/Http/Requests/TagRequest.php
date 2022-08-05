@@ -31,9 +31,9 @@ class TagRequest extends FormRequest
      * 
      * @return \Illuminate\Support\Collection<string>
      */
-    public function getCollection(string $tags)
+    public function tagsCollection()
     {
-        $tagsArray = array_unique(array_filter(array_map('trim', explode(',', $tags)), function ($e) {
+        $tagsArray = array_unique(array_filter(array_map('trim', explode(',', $this->tags)), function ($e) {
             return $e !== '';
         }));
 

@@ -3,8 +3,10 @@
 namespace App\Models;
 
 use App\Interfaces\HasTags;
+use App\Services\TagsSynchronizer;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Article extends Model implements HasTags
 {
@@ -32,7 +34,7 @@ class Article extends Model implements HasTags
         return 'slug';
     }
 
-    public function tags()
+    public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
     }
