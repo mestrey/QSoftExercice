@@ -7,22 +7,22 @@ use App\Models\Car;
 
 class CarsRepository implements CarsRepositoryContract
 {
-    public function getAllCars()
+    public function get()
     {
         return Car::get();
     }
 
-    public function getPaginatedCars(int $page)
+    public function getPaginated(int $page)
     {
         return Car::paginate($page);
     }
 
-    public function getAllFeaturedCars()
+    public function getFeatured()
     {
         return Car::with('carEngine', 'carClass')->get();
     }
 
-    public function getNewCars(int $count)
+    public function getNew(int $count)
     {
         return Car::where('is_new', 0)
             ->take($count)

@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Contracts\ArticlesRepositoryContract;
 use App\Contracts\CarsRepositoryContract;
-use App\Models\Article;
-use App\Models\Car;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Str;
 
@@ -19,8 +17,8 @@ class PagesController extends BaseController
 
     public function index()
     {
-        $articles = $this->articlesRepository->getLatestPublishedArticles(3);
-        $cars = $this->carsRepository->getNewCars(4);
+        $articles = $this->articlesRepository->get(3);
+        $cars = $this->carsRepository->getNew(4);
 
         return view('pages.homepage', [
             'articles' => $articles,
@@ -35,7 +33,7 @@ class PagesController extends BaseController
 
     public function client()
     {
-        $cars = $this->carsRepository->getAllFeaturedCars();
+        $cars = $this->carsRepository->getFeatured();
 
         $averagePrice = $cars->avg('price');
         $averagePriceDiscounted = $cars->whereNotNull('old_price')->avg('price');

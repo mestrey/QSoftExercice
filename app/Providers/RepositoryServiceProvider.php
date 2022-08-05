@@ -19,9 +19,9 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(ArticlesRepositoryContract::class, ArticlesRepository::class);
-        $this->app->bind(CarsRepositoryContract::class, CarsRepository::class);
-        $this->app->bind(TagsRepositoryContract::class, TagsRepository::class);
+        $this->app->singleton(ArticlesRepositoryContract::class, ArticlesRepository::class);
+        $this->app->singleton(CarsRepositoryContract::class, CarsRepository::class);
+        $this->app->singleton(TagsRepositoryContract::class, TagsRepository::class);
     }
 
     /**
