@@ -15,6 +15,13 @@ class ArticlesRepository implements ArticlesRepositoryContract
             ->get();
     }
 
+    public function getPaginatedArticles(int $page)
+    {
+        return Article::whereNotNull('published_at')
+            ->latest('published_at')
+            ->paginate($page);
+    }
+
     public function getAllLatestPublishedArticles()
     {
         return Article::whereNotNull('published_at')

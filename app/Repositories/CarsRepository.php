@@ -12,6 +12,11 @@ class CarsRepository implements CarsRepositoryContract
         return Car::get();
     }
 
+    public function getPaginatedCars(int $page)
+    {
+        return Car::paginate($page);
+    }
+
     public function getAllFeaturedCars()
     {
         return Car::with('carEngine', 'carClass')->get();

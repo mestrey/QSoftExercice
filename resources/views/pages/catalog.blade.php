@@ -13,6 +13,7 @@
             @endforeach
         </div>
     </div>
+    {!! $cars->links() !!}
 </main>
 
 @endsection
