@@ -4,11 +4,8 @@ namespace App\Contracts;
 
 interface ArticlesRepositoryContract
 {
-    public function getLatestPublishedArticles($count);
-    public function getPaginatedArticles(int $page);
-    public function getAllLatestPublishedArticles();
-    public function deleteArticle($article);
-
-    public function createArticle(array $data);
-    public function updateArticle($article, array $data);
+    public function get(int $count = 0, int $page = 0);
+    public function delete($article);
+    public function create(array $data);
+    public function update($article, array $data);
 }

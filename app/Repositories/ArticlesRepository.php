@@ -7,39 +7,35 @@ use App\Models\Article;
 
 class ArticlesRepository implements ArticlesRepositoryContract
 {
-    public function getLatestPublishedArticles($count)
+    public function get(int $count = 0, int $page = 0)
     {
-        return Article::whereNotNull('published_at')
-            ->latest('published_at')
-            ->take($count)
-            ->get();
+        $articles = Article::whereNotNull('published_at')
+            ->latest('published_at');
+
+        if ($count > 0) {
+            $articles = $articles->take($count);
+        }
+
+        if ($page > 0) {
+            $articles = $articles->paginate($page);
+        } else {
+            $articles = $articles->get();
+        }
+
+        return $articles;
     }
 
-    public function getPaginatedArticles(int $page)
-    {
-        return Article::whereNotNull('published_at')
-            ->latest('published_at')
-            ->paginate($page);
-    }
-
-    public function getAllLatestPublishedArticles()
-    {
-        return Article::whereNotNull('published_at')
-            ->latest('published_at')
-            ->get();
-    }
-
-    public function createArticle(array $data)
+    public function create(array $data)
     {
         return Article::create($data);
     }
 
-    public function updateArticle($article, array $data)
+    public function update($article, array $data)
     {
         return $article->update($data);
     }
 
-    public function deleteArticle($article)
+    public function delete($article)
     {
         $article->delete();
     }

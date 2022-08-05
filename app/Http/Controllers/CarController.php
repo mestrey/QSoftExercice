@@ -20,7 +20,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = $this->carsRepository->getPaginatedCars(16);
+        $cars = $this->carsRepository->getPaginated(16);
 
         return view('pages.catalog', [
             'cars' => $cars
