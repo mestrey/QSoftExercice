@@ -12,5 +12,6 @@
     <x-article.single :article="$article" />
     @endforeach
 </div>
+{!! $articles->links() !!}
 
 @endsection

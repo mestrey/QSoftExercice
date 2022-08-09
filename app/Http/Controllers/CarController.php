@@ -2,11 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\CarsRepositoryContract;
 use App\Models\Car;
 use Illuminate\Http\Request;
 
 class CarController extends Controller
 {
+    public function __construct(
+        protected CarsRepositoryContract $carsRepository,
+    ) {
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -14,7 +20,7 @@ class CarController extends Controller
      */
     public function index()
     {
-        $cars = Car::get();
+        $cars = $this->carsRepository->getPaginated(16);
 
         return view('pages.catalog', [
             'cars' => $cars
@@ -48,10 +54,10 @@ class CarController extends Controller
      * @param  Car  $car
      * @return \Illuminate\Http\Response
      */
-    public function show(Car $car)
+    public function show(int $id)
     {
         return view('pages.car', [
-            'car' => $car
+            'car' => $this->carsRepository->findById($id)
         ]);
     }
 
