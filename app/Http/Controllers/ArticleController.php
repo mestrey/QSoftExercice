@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Contracts\ArticlesRepositoryContract;
 use App\Contracts\TagsRepositoryContract;
 use App\Models\Article;
-use App\Http\Requests\StoreArticleRequest;
+use App\Http\Requests\ArticleRequest;
 use App\Http\Requests\TagRequest;
 use App\Services\TagsSynchronizer;
 use Illuminate\Support\Str;
@@ -27,7 +27,7 @@ class ArticleController extends Controller
     public function index()
     {
         return view('pages.articles', [
-            'articles' => $this->articleRepository->get(0, 5)
+            'articles' => $this->articleRepository->getPaginated(5)
         ]);
     }
 
@@ -44,10 +44,10 @@ class ArticleController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \App\Http\Requests\StoreArticleRequest  $request
+     * @param  \App\Http\Requests\ArticleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(StoreArticleRequest $request, TagRequest $tagRequest)
+    public function store(ArticleRequest $request, TagRequest $tagRequest)
     {
         $request->validated();
         $tags = $tagRequest->tagsCollection();
@@ -71,10 +71,10 @@ class ArticleController extends Controller
      * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(Article $article)
+    public function show(string $slug)
     {
         return view('pages.article', [
-            'article' => $article
+            'article' => $this->articleRepository->findBySlug($slug)
         ]);
     }
 
@@ -84,24 +84,25 @@ class ArticleController extends Controller
      * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit(Article $article)
+    public function edit(string $slug)
     {
         return view('pages.edit', [
-            'article' => $article
+            'article' => $this->articleRepository->findBySlug($slug)
         ]);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \App\Http\Requests\StoreArticleRequest  $request
+     * @param  \App\Http\Requests\ArticleRequest  $request
      * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(StoreArticleRequest $request, TagRequest $tagRequest, Article $article)
+    public function update(string $slug, ArticleRequest $request, TagRequest $tagRequest)
     {
         $request->validated();
         $tags = $tagRequest->tagsCollection();
+        $article = $this->articleRepository->findBySlug($slug);
 
         $this->articleRepository->update($article, [
             'title' => $request->title,
@@ -122,8 +123,9 @@ class ArticleController extends Controller
      * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Article $article)
+    public function destroy(string $slug)
     {
+        $article = $this->articleRepository->findBySlug($slug);
         $this->articleRepository->delete($article);
         return redirect()->route('articles.index', $article)->with('success', 'Успешно удалено!');
     }

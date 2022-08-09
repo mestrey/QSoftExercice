@@ -2,10 +2,11 @@
 
 namespace App\Http\Requests;
 
+use App\Contracts\ArticlesRepositoryContract;
 use Illuminate\Foundation\Http\FormRequest;
 use Carbon\Carbon;
 
-class StoreArticleRequest extends FormRequest
+class ArticleRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,10 +23,11 @@ class StoreArticleRequest extends FormRequest
      *
      * @return array<string, mixed>
      */
-    public function rules()
+    public function rules(ArticlesRepositoryContract $articlesRepository)
     {
+        $articleId = $articlesRepository->findBySlug($this->article)->id;
         return [
-            'title' => 'bail|required|max:255|unique:articles' . ($this->article ? ",title,{$this->article->id}" : ''),
+            'title' => 'bail|required|max:255|unique:articles' . ($articleId ? ",title,{$articleId}" : ''),
             'description' => 'required|max:255'
         ];
     }
