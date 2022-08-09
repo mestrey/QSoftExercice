@@ -36,4 +36,16 @@ class CarsRepository implements CarsRepositoryContract
         return Car::where('id', $id)
             ->firstOrFail();
     }
+
+    public function getByCategory(int $categoryId): Collection
+    {
+        return Car::where('category_id', $categoryId)
+            ->get();
+    }
+
+    public function getByCategoryPaginated(int $categoryId, int $page): LengthAwarePaginator
+    {
+        return Car::where('category_id', $categoryId)
+            ->paginate($page);
+    }
 }

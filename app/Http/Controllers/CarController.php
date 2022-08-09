@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\CarsRepositoryContract;
+use App\Contracts\CategoryRepositoryContract;
 use App\Models\Car;
 use Illuminate\Http\Request;
 
@@ -10,6 +11,7 @@ class CarController extends Controller
 {
     public function __construct(
         protected CarsRepositoryContract $carsRepository,
+        protected CategoryRepositoryContract $categoryRepository
     ) {
     }
 
@@ -21,6 +23,21 @@ class CarController extends Controller
     public function index()
     {
         $cars = $this->carsRepository->getPaginated(16);
+
+        return view('pages.catalog', [
+            'cars' => $cars
+        ]);
+    }
+
+    public function category(string $slug)
+    {
+        $category = $this->categoryRepository->findBySlug($slug);
+        $cars = $this->carsRepository->getByCategoryPaginated($category->id, 16);
+        $category->children->each(function ($child) use ($cars) {
+            $this->carsRepository->getByCategory($child->id)->each(function ($car) use ($cars) {
+                $cars->add($car);
+            });
+        });
 
         return view('pages.catalog', [
             'cars' => $cars

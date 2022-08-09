@@ -71,5 +71,23 @@ class CategorySeeder extends Seeder
                 'sort' => 2
             ]),
         ]);
+
+        $rarities = Category::factory()->create([
+            'name' => 'Раритетные',
+            'slug' => 'rarities',
+            'sort' => 2
+        ]);
+
+        $sale = Category::factory()->create([
+            'name' => 'Распродажа',
+            'slug' => 'sale',
+            'sort' => 3
+        ]);
+
+        $novelties = Category::factory()->create([
+            'name' => 'Новинки',
+            'slug' => 'novelties',
+            'sort' => 4
+        ]);
     }
 }
