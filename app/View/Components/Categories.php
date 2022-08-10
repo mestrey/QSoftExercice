@@ -23,7 +23,7 @@ class Categories extends Component
 
         $currentSlug = last(request()->segments());
 
-        if (!empty($currentSlug)) {
+        if (count(request()->segments()) > 1 && request()->segments()[0] == 'catalog') {
             $current = $this->categoryRepository->findBySlug($currentSlug);
             $this->parent = $current->parent;
         }
