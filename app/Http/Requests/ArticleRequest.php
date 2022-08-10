@@ -25,7 +25,7 @@ class ArticleRequest extends FormRequest
      */
     public function rules(ArticlesRepositoryContract $articlesRepository)
     {
-        $articleId = $articlesRepository->findBySlug($this->article)->id;
+        $articleId = $this->article ? $articlesRepository->findBySlug($this->article)->id : null;
         return [
             'title' => 'bail|required|max:255|unique:articles' . ($articleId ? ",title,{$articleId}" : ''),
             'description' => 'required|max:255'

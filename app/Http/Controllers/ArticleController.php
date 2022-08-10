@@ -7,6 +7,7 @@ use App\Contracts\TagsRepositoryContract;
 use App\Models\Article;
 use App\Http\Requests\ArticleRequest;
 use App\Http\Requests\TagRequest;
+use App\Models\Image;
 use App\Services\TagsSynchronizer;
 use Illuminate\Support\Str;
 
@@ -57,7 +58,8 @@ class ArticleController extends Controller
             'description' => $request->description,
             'body' => $request->body,
             'published_at' => $request->isPublished(),
-            'slug' => Str::slug($request->title)
+            'slug' => Str::slug($request->title),
+            'image_id' => Image::factory()->create(['path' => $request->image ?? 'pictures/car_k5_1.png'])->id,
         ]);
 
         $this->tagsSynchronizer->sync($tags, $article);
@@ -111,6 +113,11 @@ class ArticleController extends Controller
             'published_at' => $request->isPublished(),
             'slug' => Str::slug($request->title)
         ]);
+
+        $article->image()->associate(Image::factory()->create([
+            'path' => $request->image ?? 'pictures/car_k5_1.png'
+        ]));
+        $article->save();
 
         $this->tagsSynchronizer->sync($tags, $article);
 

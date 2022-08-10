@@ -17,7 +17,8 @@ class Article extends Model implements HasTags
         'title',
         'description',
         'body',
-        'published_at'
+        'published_at',
+        'image_id'
     ];
 
     /**

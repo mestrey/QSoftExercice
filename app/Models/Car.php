@@ -22,7 +22,8 @@ class Car extends Model
         'car_body_id',
         'car_engine_id',
         'is_new',
-        'category_id'
+        'category_id',
+        'image_id'
     ];
 
     public function carClass()

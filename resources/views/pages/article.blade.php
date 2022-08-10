@@ -9,7 +9,7 @@
         Редактировать
     </a>
 
-    <img src="{{ asset('pictures/car_new_stinger.png') }}" alt="" title="">
+    <img src="{{ asset($article->image->path) }}" alt="" title="">
 
     <x-article.tags :tags="$article->tags" />
 
