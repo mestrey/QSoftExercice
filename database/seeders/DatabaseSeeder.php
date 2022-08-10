@@ -17,7 +17,8 @@ class DatabaseSeeder extends Seeder
             ArticleSeeder::class,
             CarFeatureSeeder::class,
             CategorySeeder::class,
-            CarSeeder::class
+            CarSeeder::class,
+            BannerSeeder::class
         ]);
     }
 }
