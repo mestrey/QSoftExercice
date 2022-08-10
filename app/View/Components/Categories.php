@@ -22,8 +22,11 @@ class Categories extends Component
         $this->categories = $this->categoryRepository->getRoots();
 
         $currentSlug = last(request()->segments());
-        $current = $this->categoryRepository->findBySlug($currentSlug);
-        $this->parent = $current->parent;
+
+        if (!empty($currentSlug)) {
+            $current = $this->categoryRepository->findBySlug($currentSlug);
+            $this->parent = $current->parent;
+        }
     }
 
     /**
