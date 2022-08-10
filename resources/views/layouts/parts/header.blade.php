@@ -40,7 +40,7 @@
                 </button>
             </form>
 
-            <x-panels.categories />
+            <x-categories />
         </div>
     </div>
 </header>

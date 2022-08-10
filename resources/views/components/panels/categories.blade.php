@@ -1,16 +1,3 @@
-@php
-
-use App\Repositories\CategoryRepository;
-
-$categoryRepository = new CategoryRepository;
-$categories = $categoryRepository->getRoots();
-
-$currentSlug = last(request()->segments());
-$current = $categoryRepository->findBySlug($currentSlug);
-$parent = $current->parent;
-
-@endphp
-
 <nav class="order-1">
     <ul class="block lg:flex">
         @foreach ($categories as $category)
