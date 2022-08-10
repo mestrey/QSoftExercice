@@ -6,6 +6,7 @@ use App\Models\CarBody;
 use App\Models\CarClass;
 use App\Models\CarEngine;
 use App\Models\Category;
+use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -35,7 +36,8 @@ class CarFactory extends Factory
             'car_class_id' => CarClass::factory(),
             'car_engine_id' => CarEngine::factory(),
             'is_new' => $this->faker->boolean(),
-            'category_id' => Category::factory()
+            'category_id' => Category::factory(),
+            'image_id' => Image::factory()->create()
         ];
     }
 }

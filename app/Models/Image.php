@@ -13,4 +13,19 @@ class Image extends Model
         'path',
         'alt',
     ];
+
+    public function article()
+    {
+        return $this->belongsTo(Article::class);
+    }
+
+    public function car()
+    {
+        return $this->belongsTo(Car::class);
+    }
+
+    public function cars()
+    {
+        return $this->belongsToMany(Car::class);
+    }
 }
