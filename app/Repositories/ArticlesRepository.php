@@ -4,7 +4,6 @@ namespace App\Repositories;
 
 use App\Contracts\ArticlesRepositoryContract;
 use App\Models\Article;
-use App\Models\Image;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
 

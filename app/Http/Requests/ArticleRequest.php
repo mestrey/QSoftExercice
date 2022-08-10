@@ -28,7 +28,9 @@ class ArticleRequest extends FormRequest
         $articleId = $this->article ? $articlesRepository->findBySlug($this->article)->id : null;
         return [
             'title' => 'bail|required|max:255|unique:articles' . ($articleId ? ",title,{$articleId}" : ''),
-            'description' => 'required|max:255'
+            'description' => 'required|max:255',
+            'body' => '',
+            'image' => 'required',
         ];
     }
 

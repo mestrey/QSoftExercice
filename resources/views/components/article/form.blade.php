@@ -1,4 +1,4 @@
-@props(['title', 'description', 'image', 'body', 'tags'])
+@props(['title', 'description', 'body', 'tags'])
 <div class="mt-8 max-w-md">
     <div class="grid grid-cols-1 gap-6">
         <x-input.group for="title_field" error="title" text="Название новости">
@@ -14,7 +14,7 @@
             <x-input.text id="tags_field" value="{{ $tags ?? '' }}" name="tags" />
         </x-input.group>
         <x-input.group for="image_field" error="image" text="Изображение">
-            <x-input.text id="image_field" value="{{ $image ?? '' }}" name="image" />
+            <x-input.file id="image_field" name="image" />
         </x-input.group>
         <x-input.checkbox name="published" text="Опубликован" />
         {{ $slot }}

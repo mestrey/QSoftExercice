@@ -44,9 +44,12 @@ return [
             'throw' => false,
         ],
 
-        'web' => [
+        'images' => [
             'driver' => 'local',
-            'root' => base_path('public'),
+            'root' => storage_path('app/public/images'),
+            'url' => '/storage/images',
+            'visibility' => 'public',
+            'throw' => false,
         ],
 
         's3' => [

@@ -7,10 +7,10 @@
 <main class="flex-1 container mx-auto bg-white">
     <div class="p-4">
         <h1 class="text-black text-3xl font-bold mb-4">Создание новости</h1>
-        <form action="{{ route('articles.show', $article) }}" method="POST">
+        <form action="{{ route('articles.show', $article) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
-            <x-article.form title="{{ old('title') ?? $article->title }}" image="{{ old('image') ?? $article->image->path }}" description="{{ old('description') ?? $article->description }}" body="{{ old('body') ?? $article->body }}" tags="{{ old('tags') ?? $article->tags->pluck('name')->implode(',') }}">
+            <x-article.form title="{{ old('title') ?? $article->title }}" description="{{ old('description') ?? $article->description }}" body="{{ old('body') ?? $article->body }}" tags="{{ old('tags') ?? $article->tags->pluck('name')->implode(',') }}">
                 <x-button.orange message="Сохранить" />
             </x-article.form>
         </form>
