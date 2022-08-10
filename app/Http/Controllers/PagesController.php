@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Contracts\ArticlesRepositoryContract;
+use App\Contracts\BannerRepositoryContract;
 use App\Contracts\CarsRepositoryContract;
 use Illuminate\Routing\Controller as BaseController;
 use Illuminate\Support\Str;
@@ -11,7 +12,8 @@ class PagesController extends BaseController
 {
     public function __construct(
         protected ArticlesRepositoryContract $articlesRepository,
-        protected CarsRepositoryContract $carsRepository
+        protected CarsRepositoryContract $carsRepository,
+        protected BannerRepositoryContract $bannerRepository
     ) {
     }
 
@@ -19,10 +21,12 @@ class PagesController extends BaseController
     {
         $articles = $this->articlesRepository->get(3);
         $cars = $this->carsRepository->getNew(4);
+        $banners = $this->bannerRepository->getRandom(3);
 
         return view('pages.homepage', [
             'articles' => $articles,
-            'cars' => $cars
+            'cars' => $cars,
+            'banners' => $banners
         ]);
     }
 

@@ -5,11 +5,13 @@ namespace App\Providers;
 use App\Contracts\ArticleCreateServiceContract;
 use App\Contracts\ArticlesRepositoryContract;
 use App\Contracts\ArticleUpdateServiceContract;
+use App\Contracts\BannerRepositoryContract;
 use App\Contracts\CarsRepositoryContract;
 use App\Contracts\CategoryRepositoryContract;
 use App\Contracts\ImageRepositoryContract;
 use App\Contracts\TagsRepositoryContract;
 use App\Repositories\ArticlesRepository;
+use App\Repositories\BannerRepository;
 use App\Repositories\CarsRepository;
 use App\Repositories\CategoryRepository;
 use App\Repositories\ImageRepository;
@@ -35,6 +37,7 @@ class RepositoryServiceProvider extends ServiceProvider
 
         $this->app->singleton(ArticleUpdateServiceContract::class, ArticleUpdateService::class);
         $this->app->singleton(ArticleCreateServiceContract::class, ArticleCreateService::class);
+        $this->app->singleton(BannerRepositoryContract::class, BannerRepository::class);
     }
 
     /**
