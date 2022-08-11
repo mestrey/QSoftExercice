@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\ArticleCreateServiceContract;
 use App\Contracts\ArticlesRepositoryContract;
 use App\Contracts\ArticleUpdateServiceContract;
 use App\Models\Article;
@@ -41,23 +42,14 @@ class ArticleController extends Controller
     public function store(
         ArticleRequest $request,
         TagRequest $tagRequest,
-        ArticleUpdateServiceContract $articleUpdateService
+        ArticleCreateServiceContract $articleCreateService
     ) {
-        $article = $articleUpdateService->create(
+        $article = $articleCreateService->create(
             $request->validated(),
             $tagRequest->tagsCollection(),
             $request->isPublished(),
             $request->file('image')
         );
-
-        // $article = $this->articleRepository->create([
-        //     'title' => $request->title,
-        //     'description' => $request->description,
-        //     'body' => $request->body,
-        //     'published_at' => $request->isPublished(),
-        //     'slug' => Str::slug($request->title),
-        //     'image_id' => Image::factory()->create(['path' => $request->image ?? 'pictures/car_k5_1.png'])->id,
-        // ]);
 
         return redirect()->route('articles.show', $article)->with('success', 'Успешно создано!');
     }
