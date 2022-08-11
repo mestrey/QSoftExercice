@@ -38,6 +38,7 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(ArticleUpdateServiceContract::class, ArticleUpdateService::class);
         $this->app->singleton(ArticleCreateServiceContract::class, ArticleCreateService::class);
         $this->app->singleton(BannerRepositoryContract::class, BannerRepository::class);
+        $this->app->singleton(BannerRepositoryContract::class, BannerRepository::class);
     }
 
     /**
