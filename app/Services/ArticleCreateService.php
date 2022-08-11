@@ -7,6 +7,7 @@ use App\Contracts\ArticlesRepositoryContract;
 use App\Contracts\ImageRepositoryContract;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 
 class ArticleCreateService implements ArticleCreateServiceContract
@@ -25,15 +26,18 @@ class ArticleCreateService implements ArticleCreateServiceContract
         UploadedFile $file
     ) {
         $path = $file->store('images', ['disk' => 'public']);
+        $article = DB::transaction(function () use ($data, $isPublished, $path) {
+            $article = $this->articlesRepository->create([
+                'title' => $data['title'],
+                'description' => $data['description'],
+                'body' => $data['body'],
+                'published_at' => $isPublished,
+                'slug' => Str::slug($data['title']),
+                'image_id' => $this->imageRepository->create(['path' => $path])->id
+            ]);
 
-        $article = $this->articlesRepository->create([
-            'title' => $data['title'],
-            'description' => $data['description'],
-            'body' => $data['body'],
-            'published_at' => $isPublished,
-            'slug' => Str::slug($data['title']),
-            'image_id' => $this->imageRepository->create(['path' => $path])->id
-        ]);
+            return $article;
+        });
 
         $this->tagsSynchronizer->sync($tagsCollection, $article);
 
