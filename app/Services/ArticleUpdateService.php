@@ -7,6 +7,7 @@ use App\Contracts\ImageRepositoryContract;
 use App\Models\Article;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\DB;
 
 class ArticleUpdateService implements ArticleUpdateServiceContract
 {
@@ -22,13 +23,15 @@ class ArticleUpdateService implements ArticleUpdateServiceContract
         Collection $tagsCollection,
         UploadedFile $file
     ) {
-        $article->update($data);
+        DB::transaction(function () use ($article, $data, $file) {
+            $article->update($data);
 
-        $path = $file->store('images', ['disk' => 'public']);
-        $article->image()->associate($this->imageRepository->create([
-            'path' => $path
-        ]));
-        $article->save();
+            $path = $file->store('images', ['disk' => 'public']);
+            $article->image()->associate($this->imageRepository->create([
+                'path' => $path
+            ]));
+            $article->save();
+        });
 
         $this->tagsSynchronizer->sync($tagsCollection, $article);
 
