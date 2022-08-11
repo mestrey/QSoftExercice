@@ -10,7 +10,7 @@
         <div class="flex-1 grid grid-cols-1 lg:grid-cols-5 border-b w-full">
             <div class="col-span-3 border-r-0 sm:border-r pb-4 px-4 text-center catalog-detail-slick-preview" data-slick-carousel-detail>
                 <div class="mb-4 border rounded" data-slick-carousel-detail-items>
-                    <img class="w-full" src="{{ asset('pictures/car_K5-half.png') }}" alt="" title="">
+                    <img class="w-full" src="{{ Storage::url($car->image->path) }}" alt="" title="">
                 </div>
             </div>
             <div class="col-span-1 lg:col-span-2">

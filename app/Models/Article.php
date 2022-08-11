@@ -17,7 +17,8 @@ class Article extends Model implements HasTags
         'title',
         'description',
         'body',
-        'published_at'
+        'published_at',
+        'image_id'
     ];
 
     /**
@@ -37,5 +38,10 @@ class Article extends Model implements HasTags
     public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function image()
+    {
+        return $this->belongsTo(Image::class, 'image_id');
     }
 }

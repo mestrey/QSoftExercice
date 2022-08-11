@@ -2,32 +2,24 @@
 
 namespace App\Http\Controllers;
 
+use App\Contracts\ArticleCreateServiceContract;
 use App\Contracts\ArticlesRepositoryContract;
-use App\Contracts\TagsRepositoryContract;
+use App\Contracts\ArticleUpdateServiceContract;
 use App\Models\Article;
 use App\Http\Requests\ArticleRequest;
 use App\Http\Requests\TagRequest;
-use App\Services\TagsSynchronizer;
-use Illuminate\Support\Str;
 
 class ArticleController extends Controller
 {
-    public function __construct(
-        protected TagsSynchronizer $tagsSynchronizer,
-        protected TagsRepositoryContract $tagRepository,
-        protected ArticlesRepositoryContract $articleRepository
-    ) {
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(ArticlesRepositoryContract $articleRepository)
     {
         return view('pages.articles', [
-            'articles' => $this->articleRepository->getPaginated(5)
+            'articles' => $articleRepository->getPaginated(5)
         ]);
     }
 
@@ -47,20 +39,17 @@ class ArticleController extends Controller
      * @param  \App\Http\Requests\ArticleRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(ArticleRequest $request, TagRequest $tagRequest)
-    {
-        $request->validated();
-        $tags = $tagRequest->tagsCollection();
-
-        $article = $this->articleRepository->create([
-            'title' => $request->title,
-            'description' => $request->description,
-            'body' => $request->body,
-            'published_at' => $request->isPublished(),
-            'slug' => Str::slug($request->title)
-        ]);
-
-        $this->tagsSynchronizer->sync($tags, $article);
+    public function store(
+        ArticleRequest $request,
+        TagRequest $tagRequest,
+        ArticleCreateServiceContract $articleCreateService
+    ) {
+        $article = $articleCreateService->create(
+            $request->validated(),
+            $tagRequest->tagsCollection(),
+            $request->isPublished(),
+            $request->file('image')
+        );
 
         return redirect()->route('articles.show', $article)->with('success', 'Успешно создано!');
     }
@@ -71,10 +60,10 @@ class ArticleController extends Controller
      * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function show(string $slug)
+    public function show(string $slug, ArticlesRepositoryContract $articleRepository)
     {
         return view('pages.article', [
-            'article' => $this->articleRepository->findBySlug($slug)
+            'article' => $articleRepository->findBySlug($slug)
         ]);
     }
 
@@ -84,10 +73,10 @@ class ArticleController extends Controller
      * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function edit(string $slug)
+    public function edit(string $slug, ArticlesRepositoryContract $articleRepository)
     {
         return view('pages.edit', [
-            'article' => $this->articleRepository->findBySlug($slug)
+            'article' => $articleRepository->findBySlug($slug)
         ]);
     }
 
@@ -98,21 +87,22 @@ class ArticleController extends Controller
      * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function update(string $slug, ArticleRequest $request, TagRequest $tagRequest)
-    {
+    public function update(
+        string $slug,
+        ArticleRequest $request,
+        TagRequest $tagRequest,
+        ArticlesRepositoryContract $articleRepository,
+        ArticleUpdateServiceContract $articleUpdateService
+    ) {
         $request->validated();
-        $tags = $tagRequest->tagsCollection();
-        $article = $this->articleRepository->findBySlug($slug);
+        $article = $articleRepository->findBySlug($slug);
 
-        $this->articleRepository->update($article, [
-            'title' => $request->title,
-            'description' => $request->description,
-            'body' => $request->body,
-            'published_at' => $request->isPublished(),
-            'slug' => Str::slug($request->title)
-        ]);
-
-        $this->tagsSynchronizer->sync($tags, $article);
+        $article = $articleUpdateService->update(
+            $articleRepository->findBySlug($slug),
+            $request->validated(),
+            $tagRequest->tagsCollection(),
+            $request->file('image')
+        );
 
         return redirect()->route('articles.show', $article)->with('success', 'Успешно редактировано!');
     }
@@ -123,10 +113,10 @@ class ArticleController extends Controller
      * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(string $slug)
+    public function destroy(string $slug, ArticlesRepositoryContract $articleRepository)
     {
-        $article = $this->articleRepository->findBySlug($slug);
-        $this->articleRepository->delete($article);
+        $article = $articleRepository->findBySlug($slug);
+        $articleRepository->delete($article);
         return redirect()->route('articles.index', $article)->with('success', 'Успешно удалено!');
     }
 }

@@ -13,6 +13,9 @@
         <x-input.group for="tags_field" error="tags" text="Теги (через запятую)">
             <x-input.text id="tags_field" value="{{ $tags ?? '' }}" name="tags" />
         </x-input.group>
+        <x-input.group for="image_field" error="image" text="Изображение">
+            <x-input.file id="image_field" name="image" />
+        </x-input.group>
         <x-input.checkbox name="published" text="Опубликован" />
         {{ $slot }}
     </div>

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Article;
+use App\Models\Image;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -24,7 +25,8 @@ class ArticleFactory extends Factory
             'title' => $this->faker->name,
             'description' => $this->faker->realText(50),
             'body' => $this->faker->realText(200),
-            'published_at' => $this->faker->boolean(50) ? $this->faker->dateTime('now') : null
+            'published_at' => $this->faker->boolean(50) ? $this->faker->dateTime('now') : null,
+            'image_id' => Image::factory()->create()
         ];
     }
 
