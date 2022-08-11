@@ -22,6 +22,7 @@ class Car extends Model
         'car_body_id',
         'car_engine_id',
         'is_new',
+        'category_id'
     ];
 
     public function carClass()
@@ -37,5 +38,10 @@ class Car extends Model
     public function carEngine()
     {
         return $this->belongsTo(CarEngine::class, 'car_engine_id');
+    }
+
+    public function category()
+    {
+        return $this->belongsTo(Category::class, 'category_id');
     }
 }
