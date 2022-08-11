@@ -6,36 +6,34 @@ use App\Contracts\ArticlesRepositoryContract;
 use App\Models\Article;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Collection;
+use Illuminate\Support\Facades\Cache;
 
 class ArticlesRepository implements ArticlesRepositoryContract
 {
-    public function get(int $count = 0): Collection
+    public function get(int $count): Collection
     {
-        $articles = Article::whereNotNull('published_at')
-            ->latest('published_at');
-
-        if ($count > 0) {
-            $articles = $articles->take($count)->get();
-        } else {
-            $articles = $articles->get();
-        }
-
-        return $articles;
+        return Cache::remember('latest_articles', 3600, function () use ($count) {
+            return Article::whereNotNull('published_at')
+                ->latest('published_at')
+                ->take($count)
+                ->get();
+        });
     }
 
     public function getPaginated(int $page): LengthAwarePaginator
     {
-        $articles = Article::whereNotNull('published_at')
-            ->latest('published_at');
-
-        $articles = $articles->paginate($page);
-
-        return $articles;
+        return Cache::remember('paginated_articles', 3600, function () use ($page) {
+            return Article::whereNotNull('published_at')
+                ->latest('published_at')
+                ->paginate($page);
+        });
     }
 
     public function create(array $data): Article
     {
-        return Article::create($data);
+        return Cache::remember(str_replace('\\', '_', Article::class) . '_' . $data['slug'], 3600, function () use ($data) {
+            return Article::create($data);
+        });
     }
 
     public function update(Article $article, array $data): bool
@@ -50,7 +48,9 @@ class ArticlesRepository implements ArticlesRepositoryContract
 
     public function findBySlug(string $slug): Article
     {
-        return Article::where('slug', $slug)
-            ->firstOrFail();
+        return Cache::remember(str_replace('\\', '_', Article::class) . '_' . $slug, 3600, function () use ($slug) {
+            return Article::where('slug', $slug)
+                ->firstOrFail();
+        });
     }
 }
