@@ -34,11 +34,10 @@ class RepositoryServiceProvider extends ServiceProvider
         $this->app->singleton(TagsRepositoryContract::class, TagsRepository::class);
         $this->app->singleton(CategoryRepositoryContract::class, CategoryRepository::class);
         $this->app->singleton(ImageRepositoryContract::class, ImageRepository::class);
+        $this->app->singleton(BannerRepositoryContract::class, BannerRepository::class);
 
         $this->app->singleton(ArticleUpdateServiceContract::class, ArticleUpdateService::class);
         $this->app->singleton(ArticleCreateServiceContract::class, ArticleCreateService::class);
-        $this->app->singleton(BannerRepositoryContract::class, BannerRepository::class);
-        $this->app->singleton(BannerRepositoryContract::class, BannerRepository::class);
     }
 
     /**
