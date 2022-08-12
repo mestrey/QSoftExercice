@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CarController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,3 +31,7 @@ Route::resource('articles', ArticleController::class);
 Route::get('/catalog', [CarController::class, 'index'])->name('catalog');
 Route::get('/catalog/{slug}', [CarController::class, 'category'])->name('category');
 Route::get('/products/{car}', [CarController::class, 'show'])->name('products.show');
+
+Auth::routes();
+
+Route::get('/account', [AccountController::class, 'index'])->name('account');
