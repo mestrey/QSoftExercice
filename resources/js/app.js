@@ -4,8 +4,43 @@
  * building robust, powerful web applications using Vue and Laravel.
  */
 
-import './bootstrap';
-import { createApp } from 'vue';
+import "./bootstrap";
+import { createApp } from "vue";
+
+require("jquery");
+require("slick-carousel");
+
+$(function () {
+    $("[data-slick-carousel]").slick({
+        dots: true,
+    });
+
+    $("[data-accordion]").each(function () {
+        let $accordion = $(this);
+        let isOpen = $accordion.data("active") !== undefined;
+
+        let $accordionToggle = $accordion.find("[data-accordion-toggle]");
+        let $accordionNoActiveItem = $accordion.find(
+            "[data-accordion-not-active]"
+        );
+        let $accordionActiveItem = $accordion.find("[data-accordion-active]");
+        let $accordionContent = $accordion.find("[data-accordion-details]");
+
+        $accordionToggle.on("click", function () {
+            if (isOpen) {
+                $accordionNoActiveItem.show();
+                $accordionActiveItem.hide();
+                $accordionContent.slideUp();
+            } else {
+                $accordionNoActiveItem.hide();
+                $accordionActiveItem.show();
+                $accordionContent.slideDown();
+            }
+
+            isOpen = !isOpen;
+        });
+    });
+});
 
 /**
  * Next, we will create a fresh Vue application instance. You may then begin
@@ -15,8 +50,8 @@ import { createApp } from 'vue';
 
 const app = createApp({});
 
-import ExampleComponent from './components/ExampleComponent.vue';
-app.component('example-component', ExampleComponent);
+import ExampleComponent from "./components/ExampleComponent.vue";
+app.component("example-component", ExampleComponent);
 
 /**
  * The following block of code may be used to automatically register your
@@ -36,4 +71,4 @@ app.component('example-component', ExampleComponent);
  * scaffolding. Otherwise, you will need to add an element yourself.
  */
 
-app.mount('#app');
+app.mount("#app");
