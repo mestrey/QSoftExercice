@@ -8,7 +8,7 @@ use Illuminate\Support\Collection;
 
 interface ArticlesRepositoryContract
 {
-    public function get(int $count = 0): Collection;
+    public function get(int $count): Collection;
     public function getPaginated(int $page): LengthAwarePaginator;
     public function delete(Article $article): void;
     public function create(array $data): Article;
