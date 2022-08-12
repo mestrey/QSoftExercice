@@ -17,10 +17,10 @@ class CarsRepository implements CarsRepositoryContract
         });
     }
 
-    public function getPaginated(int $page): LengthAwarePaginator
+    public function getPaginated(int $pageLength, int $pageNum): LengthAwarePaginator
     {
-        return Cache::remember('paginated_cars', 3600, function () use ($page) {
-            return Car::paginate($page);
+        return Cache::remember('paginated_cars_' . $pageLength . '_' . $pageNum, 3600, function () use ($pageLength) {
+            return Car::paginate($pageLength);
         });
     }
 
@@ -33,7 +33,7 @@ class CarsRepository implements CarsRepositoryContract
 
     public function getNew(int $count): Collection
     {
-        return Cache::remember('new_cars', 3600, function () use ($count) {
+        return Cache::remember('new_cars_' . $count, 3600, function () use ($count) {
             return Car::where('is_new', 0)
                 ->take($count)
                 ->get();
@@ -56,11 +56,11 @@ class CarsRepository implements CarsRepositoryContract
         });
     }
 
-    public function getByCategoryPaginated(int $categoryId, int $page): LengthAwarePaginator
+    public function getByCategoryPaginated(int $categoryId, int $pageLength, int $pageNum): LengthAwarePaginator
     {
-        return Cache::remember('paginated_cars_category_' . $categoryId, 3600, function () use ($categoryId, $page) {
+        return Cache::remember('paginated_cars_category_' . $categoryId . '_' . $pageLength . '_' . $pageNum, 3600, function () use ($categoryId, $pageLength) {
             return Car::where('category_id', $categoryId)
-                ->paginate($page);
+                ->paginate($pageLength);
         });
     }
 }

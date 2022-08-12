@@ -8,6 +8,7 @@ use App\Contracts\ArticleUpdateServiceContract;
 use App\Models\Article;
 use App\Http\Requests\ArticleRequest;
 use App\Http\Requests\TagRequest;
+use Illuminate\Http\Request;
 
 class ArticleController extends Controller
 {
@@ -16,10 +17,13 @@ class ArticleController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(ArticlesRepositoryContract $articleRepository)
-    {
+    public function index(
+        Request $request,
+        ArticlesRepositoryContract $articleRepository
+    ) {
+        $page = $request->has('page') ? $request->query('page') : 1;
         return view('pages.articles', [
-            'articles' => $articleRepository->getPaginated(5)
+            'articles' => $articleRepository->getPaginated(5, $page)
         ]);
     }
 

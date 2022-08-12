@@ -20,19 +20,21 @@ class CarController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $cars = $this->carsRepository->getPaginated(16);
+        $page = $request->has('page') ? $request->query('page') : 1;
+        $cars = $this->carsRepository->getPaginated(16, $page);
 
         return view('pages.catalog', [
             'cars' => $cars
         ]);
     }
 
-    public function category(string $slug)
+    public function category(string $slug, Request $request)
     {
+        $page = $request->has('page') ? $request->query('page') : 1;
         $category = $this->categoryRepository->findBySlug($slug);
-        $cars = $this->carsRepository->getByCategoryPaginated($category->id, 16);
+        $cars = $this->carsRepository->getByCategoryPaginated($category->id, 16, $page);
         $category->children->each(function ($child) use ($cars) {
             $this->carsRepository->getByCategory($child->id)->each(function ($car) use ($cars) {
                 $cars->add($car);

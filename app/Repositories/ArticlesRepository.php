@@ -12,7 +12,7 @@ class ArticlesRepository implements ArticlesRepositoryContract
 {
     public function get(int $count): Collection
     {
-        return Cache::remember('latest_articles', 3600, function () use ($count) {
+        return Cache::remember('latest_articles_' . $count, 3600, function () use ($count) {
             return Article::whereNotNull('published_at')
                 ->latest('published_at')
                 ->take($count)
@@ -20,12 +20,12 @@ class ArticlesRepository implements ArticlesRepositoryContract
         });
     }
 
-    public function getPaginated(int $page): LengthAwarePaginator
+    public function getPaginated(int $pageLength, int $pageNum): LengthAwarePaginator
     {
-        return Cache::remember('paginated_articles', 3600, function () use ($page) {
+        return Cache::remember('paginated_articles_' . $pageLength . '_' . $pageNum, 3600, function () use ($pageLength) {
             return Article::whereNotNull('published_at')
                 ->latest('published_at')
-                ->paginate($page);
+                ->paginate($pageLength);
         });
     }
 
