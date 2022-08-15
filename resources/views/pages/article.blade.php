@@ -5,9 +5,11 @@
 @section('information')
 
 <div class="space-y-4">
+    @admin
     <a href="{{ route('articles.edit', $article) }}" class="inline-flex items-center text-orange hover:opacity-75">
         Редактировать
     </a>
+    @endadmin
 
     <img src="{{ Storage::url($article->image->path) }}" alt="" title="">
 

@@ -48,6 +48,10 @@ class ArticleController extends Controller
         TagRequest $tagRequest,
         ArticleCreateServiceContract $articleCreateService
     ) {
+        if ($request->user()->cannot('update')) {
+            abort(403);
+        }
+
         $article = $articleCreateService->create(
             $request->validated(),
             $tagRequest->tagsCollection(),
@@ -101,6 +105,10 @@ class ArticleController extends Controller
         $request->validated();
         $article = $articleRepository->findBySlug($slug);
 
+        if ($request->user()->cannot('update')) {
+            abort(403);
+        }
+
         $article = $articleUpdateService->update(
             $articleRepository->findBySlug($slug),
             $request->validated(),
@@ -117,8 +125,12 @@ class ArticleController extends Controller
      * @param  Article  $article
      * @return \Illuminate\Http\Response
      */
-    public function destroy(string $slug, ArticlesRepositoryContract $articleRepository)
+    public function destroy(string $slug, Request $request, ArticlesRepositoryContract $articleRepository)
     {
+        if ($request->user()->cannot('update')) {
+            abort(403);
+        }
+
         $article = $articleRepository->findBySlug($slug);
         $articleRepository->delete($article);
         return redirect()->route('articles.index', $article)->with('success', 'Успешно удалено!');

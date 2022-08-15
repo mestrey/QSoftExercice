@@ -21,7 +21,7 @@ return new class extends Migration
             $table->timestamps();
         });
 
-        DB::table('roles')->insert([
+        Role::factory()->create([
             'name' => 'admin',
         ]);
     }
