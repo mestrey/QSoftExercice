@@ -48,7 +48,7 @@ class ArticleController extends Controller
         TagRequest $tagRequest,
         ArticleCreateServiceContract $articleCreateService
     ) {
-        if ($request->user()->cannot('update')) {
+        if ($request->user()->cannot('create', Article::class)) {
             abort(403);
         }
 
@@ -105,7 +105,7 @@ class ArticleController extends Controller
         $request->validated();
         $article = $articleRepository->findBySlug($slug);
 
-        if ($request->user()->cannot('update')) {
+        if ($request->user()->cannot('update', Article::class)) {
             abort(403);
         }
 
@@ -127,7 +127,7 @@ class ArticleController extends Controller
      */
     public function destroy(string $slug, Request $request, ArticlesRepositoryContract $articleRepository)
     {
-        if ($request->user()->cannot('update')) {
+        if ($request->user()->cannot('delete', Article::class)) {
             abort(403);
         }
 

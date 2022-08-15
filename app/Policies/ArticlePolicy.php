@@ -15,23 +15,22 @@ class ArticlePolicy
      *
      * @return void
      */
-    public function __construct(
-        protected RoleRepositoryContract $roleRepository
-    ) {
+    public function __construct()
+    {
     }
 
     public function update(User $user)
     {
-        return $user->role->id == $this->roleRepository->findByName('admin')->id;
+        return $user->hasAdminRole();
     }
 
     public function create(User $user)
     {
-        return $user->role->id == $this->roleRepository->findByName('admin')->id;
+        return $user->hasAdminRole();
     }
 
     public function delete(User $user)
     {
-        return $user->role->id == $this->roleRepository->findByName('admin')->id;
+        return $user->hasAdminRole();
     }
 }
