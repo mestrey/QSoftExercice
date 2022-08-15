@@ -17,6 +17,10 @@
     <div class="wrapper flex flex-1 flex-col">
         @include('layouts.parts.header')
 
+        @if(!View::hasSection('noBreadcrumbs'))
+        {{ Breadcrumbs::render() }}
+        @endif
+
         @yield('content')
 
         @include('layouts.parts.footer')

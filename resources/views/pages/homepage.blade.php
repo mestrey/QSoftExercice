@@ -1,6 +1,7 @@
 @extends('layouts.app')
 
 @section('title', 'Главная страница')
+@section('noBreadcrumbs', '')
 
 @section('content')
 
