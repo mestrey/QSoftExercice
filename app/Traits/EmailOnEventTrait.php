@@ -10,7 +10,7 @@ trait EmailOnEventTrait
 {
     public static function bootEmailOnEventTrait()
     {
-        $admin = User::where('email', env('ADMIN_EMAIL', 'admin@example.com'))
+        $admin = User::where('email', env('MAIL_FROM_ADDRESS', 'admin@example.com'))
             ->firstOrFail();
 
         static::updated(function ($item) use ($admin) {
@@ -20,7 +20,7 @@ trait EmailOnEventTrait
                 'title' => 'Редактирование',
                 'body' => $name . ' изменен(a)',
                 'name' => $name,
-                'url' => $slug,
+                'url' => 'articles/' . $slug,
             ]));
         });
 
@@ -31,7 +31,7 @@ trait EmailOnEventTrait
                 'title' => 'Удаление',
                 'body' => $name . ' удален(a)',
                 'name' => $name,
-                'url' => $slug,
+                'url' => 'articles/' . $slug,
             ]));
         });
 
@@ -42,7 +42,7 @@ trait EmailOnEventTrait
                 'title' => 'Создание',
                 'body' => $name . ' создан(a)',
                 'name' => $name,
-                'url' => $slug,
+                'url' => 'articles/' . $slug,
             ]));
         });
     }
