@@ -2,6 +2,13 @@
 
 namespace App\Providers;
 
+use App\Events\ArticleCreated;
+use App\Events\ArticleDeleted;
+use App\Events\ArticleUpdated;
+use App\Listeners\ArticleCreatedListener;
+use App\Listeners\ArticleDeletedListener;
+use App\Listeners\ArticleUpdatedListener;
+use App\Listeners\SendArticleNotification;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -27,7 +34,9 @@ class EventServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        Event::listen(ArticleCreated::class, [ArticleCreatedListener::class, 'handle']);
+        Event::listen(ArticleUpdated::class, [ArticleUpdatedListener::class, 'handle']);
+        Event::listen(ArticleDeleted::class, [ArticleDeletedListener::class, 'handle']);
     }
 
     /**

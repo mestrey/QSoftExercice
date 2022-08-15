@@ -4,14 +4,13 @@ namespace App\Models;
 
 use App\Interfaces\HasTags;
 use App\Traits\CacheableTrait;
-use App\Traits\EmailOnEventTrait;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphToMany;
 
 class Article extends Model implements HasTags
 {
-    use HasFactory, CacheableTrait, EmailOnEventTrait;
+    use HasFactory, CacheableTrait;
 
     protected $fillable = [
         'slug',

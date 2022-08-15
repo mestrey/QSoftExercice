@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Contracts\ArticleCreateServiceContract;
 use App\Contracts\ArticlesRepositoryContract;
 use App\Contracts\ArticleUpdateServiceContract;
+use App\Events\ArticleCreated;
+use App\Events\ArticleDeleted;
+use App\Events\ArticleUpdated;
 use App\Models\Article;
 use App\Http\Requests\ArticleRequest;
 use App\Http\Requests\TagRequest;
@@ -54,6 +57,8 @@ class ArticleController extends Controller
             $request->isPublished(),
             $request->file('image')
         );
+
+        event(new ArticleCreated($article));
 
         return redirect()->route('articles.show', $article)->with('success', 'Успешно создано!');
     }
@@ -108,6 +113,8 @@ class ArticleController extends Controller
             $request->file('image')
         );
 
+        event(new ArticleUpdated($article));
+
         return redirect()->route('articles.show', $article)->with('success', 'Успешно редактировано!');
     }
 
@@ -121,6 +128,9 @@ class ArticleController extends Controller
     {
         $article = $articleRepository->findBySlug($slug);
         $articleRepository->delete($article);
+
+        event(new ArticleDeleted($article));
+
         return redirect()->route('articles.index', $article)->with('success', 'Успешно удалено!');
     }
 }
