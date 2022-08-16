@@ -15,7 +15,8 @@
         "laravel/tinker": "^2.7",
         "laravel/ui": "^4.0",
         "pelmered/fake-car": "^1.7",
-        "predis/predis": "^2.0"
+        "predis/predis": "^2.0",
+        "vinkla/shield": "^8.0"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.7",
