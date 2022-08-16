@@ -63,4 +63,9 @@ class CarsRepository implements CarsRepositoryContract
                 ->paginate($pageLength);
         });
     }
+
+    public function count(): int
+    {
+        return Car::count();
+    }
 }

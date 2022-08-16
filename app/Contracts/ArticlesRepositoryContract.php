@@ -14,4 +14,8 @@ interface ArticlesRepositoryContract
     public function create(array $data): Article;
     public function update(Article $article, array $data): bool;
     public function findBySlug(string $slug): Article;
+    public function count(): int;
+    public function getLongest(): Article;
+    public function getShortest(): Article;
+    public function getMostTagged(): Article;
 }

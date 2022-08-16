@@ -16,4 +16,14 @@ class TagsRepository implements TagsRepositoryContract
             ]);
         });
     }
+
+    public function getMostUsed(): Tag
+    {
+        return Tag::withCount('articles')->orderByDesc('articles_count')->first();
+    }
+
+    public function averageArticle(): float
+    {
+        return Tag::withCount('articles')->get()->avg('articles_count');
+    }
 }

@@ -53,4 +53,24 @@ class ArticlesRepository implements ArticlesRepositoryContract
                 ->firstOrFail();
         });
     }
+
+    public function count(): int
+    {
+        return Article::count();
+    }
+
+    public function getLongest(): Article
+    {
+        return Article::orderByRaw('CHAR_LENGTH(body) DESC')->first();
+    }
+
+    public function getShortest(): Article
+    {
+        return Article::orderByRaw('CHAR_LENGTH(body)')->first();
+    }
+
+    public function getMostTagged(): Article
+    {
+        return Article::withCount('tags')->orderByDesc('tags_count')->first();
+    }
 }
