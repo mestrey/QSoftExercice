@@ -16,4 +16,7 @@ interface CarsRepositoryContract
     public function getByCategory(int $categoryId): Collection;
     public function getByCategoryPaginated(int $categoryId, int $pageLength, int $pageNum): LengthAwarePaginator;
     public function count(): int;
+    public function create(array $data): Car;
+    public function delete(Car $car): void;
+    public function update(Car $car, array $data): bool;
 }

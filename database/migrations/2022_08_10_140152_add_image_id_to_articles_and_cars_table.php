@@ -19,7 +19,7 @@ return new class extends Migration
         });
 
         Schema::table('cars', function (Blueprint $table) {
-            $table->foreignIdFor(Image::class)->unique();
+            $table->foreignIdFor(Image::class)->unique()->nullable();
         });
     }
 

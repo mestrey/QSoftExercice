@@ -68,4 +68,19 @@ class CarsRepository implements CarsRepositoryContract
     {
         return Car::count();
     }
+
+    public function create(array $data): Car
+    {
+        return Car::create($data);
+    }
+
+    public function delete(Car $car): void
+    {
+        $car->delete();
+    }
+
+    public function update(Car $car, array $data): bool
+    {
+        return $car->update($data);
+    }
 }
