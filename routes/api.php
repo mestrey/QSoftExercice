@@ -19,7 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::resource('cars', CarApiController::class, [
-    'except' => ['show', 'edit', 'create'],
+Route::apiResource('cars', CarApiController::class, [
     'middleware' => 'shield'
 ]);
