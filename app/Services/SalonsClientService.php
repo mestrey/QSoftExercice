@@ -9,7 +9,8 @@ class SalonsClientService implements SalonsClientServiceContract
 {
     public function __construct(
         private string $login,
-        private string $password
+        private string $password,
+        private string $baseUrl,
     ) {
     }
 
@@ -17,7 +18,7 @@ class SalonsClientService implements SalonsClientServiceContract
     {
         return Http::acceptJson()
             ->withBasicAuth($this->login, $this->password)
-            ->get('http://127.0.0.1:8001/api/v1/salons')
+            ->get($this->baseUrl)
             ->json();
     }
 
@@ -25,7 +26,7 @@ class SalonsClientService implements SalonsClientServiceContract
     {
         return Http::acceptJson()
             ->withBasicAuth($this->login, $this->password)
-            ->get('http://127.0.0.1:8001/api/v1/salons?limit=2&in_random_order')
+            ->get($this->baseUrl . '?limit=2&in_random_order')
             ->json();
     }
 }

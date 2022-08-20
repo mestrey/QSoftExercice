@@ -15,8 +15,9 @@ class SalonsClientRepository implements SalonsClientRepositoryContract
     public function __construct()
     {
         $this->salonsClientService = new SalonsClientService(
-            'student',
-            'password'
+            env('SALON_API_LOGIN', 'student'),
+            env('SALON_API_PASSWORD', 'password'),
+            env('SALON_API_URL', 'http://127.0.0.1:8001/api/v1/salons'),
         );
     }
 
