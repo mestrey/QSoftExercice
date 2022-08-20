@@ -96,3 +96,8 @@ Breadcrumbs::for('password.request', function (Generator $trail) {
     $trail->parent('homepage');
     $trail->push('Сброс пароля');
 });
+
+Breadcrumbs::for('salons', function (Generator $trail) {
+    $trail->parent('homepage');
+    $trail->push('Салоны');
+});

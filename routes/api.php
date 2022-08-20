@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CarApiController;
+use App\Http\Controllers\SalonApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,3 +23,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('cars', CarApiController::class, [
     'middleware' => 'shield'
 ]);
+
+Route::middleware('salon')->get('/salons', [SalonApiController::class, 'index']);

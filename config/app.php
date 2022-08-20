@@ -199,6 +199,7 @@ return [
         App\Providers\TagsSynchronizerProvider::class,
         App\Providers\RepositoryServiceProvider::class,
         App\Providers\ArticleServiceProvider::class,
+        App\Providers\SalonServiceProvider::class,
 
     ],
 

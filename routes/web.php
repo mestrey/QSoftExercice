@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagesController;
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CarController;
+use App\Http\Controllers\SalonController;
 use Illuminate\Support\Facades\Auth;
 
 /*
@@ -35,3 +36,5 @@ Route::get('/products/{car}', [CarController::class, 'show'])->name('products.sh
 Auth::routes();
 
 Route::get('/account', [AccountController::class, 'index'])->name('account');
+
+Route::get('/salons', [SalonController::class, 'index'])->name('salons');

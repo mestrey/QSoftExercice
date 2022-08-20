@@ -64,5 +64,6 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
         'shield' => \Vinkla\Shield\ShieldMiddleware::class,
+        'salon' => \App\Http\Middleware\SalonApiAuth::class
     ];
 }
