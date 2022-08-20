@@ -197,7 +197,8 @@ return [
         App\Providers\TelescopeServiceProvider::class,
 
         App\Providers\TagsSynchronizerProvider::class,
-        App\Providers\RepositoryServiceProvider::class
+        App\Providers\RepositoryServiceProvider::class,
+        App\Providers\ArticleServiceProvider::class,
 
     ],
 
