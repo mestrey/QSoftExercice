@@ -15,22 +15,24 @@ class SalonsClientRepository implements SalonsClientRepositoryContract
     public function __construct()
     {
         $this->salonsClientService = new SalonsClientService(
-            env('SALON_API_LOGIN', 'student'),
-            env('SALON_API_PASSWORD', 'password'),
-            env('SALON_API_URL', 'http://127.0.0.1:8001/api/v1/salons'),
+            env('SALON_API_LOGIN'),
+            env('SALON_API_PASSWORD'),
+            env('SALON_API_URL'),
         );
     }
 
     public function getAll()
     {
-        $salons = Cache::remember('salons_all', 3600, function () {
-            return $this->salonsClientService->getAll();
-        });
+        // $salons = Cache::remember('salons_all', 3600, function () {
+        //     return $this->salonsClientService->get();
+        // });
 
-        if ($salons['success']) {
+        $salons = $this->salonsClientService->get();
+
+        if (!isset($salons['message'])) {
             $result = array_map(function ($salon) {
                 return Salon::createFromArray($salon);
-            }, $salons['salons']);
+            }, $salons);
             return $result;
         } else {
             return null;
@@ -39,14 +41,16 @@ class SalonsClientRepository implements SalonsClientRepositoryContract
 
     public function getTwoRandom()
     {
-        $salons = Cache::remember('salons_two_rand', 300, function () {
-            return $this->salonsClientService->getTwoRandom();
-        });
+        // $salons = Cache::remember('salons_two_rand', 300, function () {
+        //     return $this->salonsClientService->get(true, 2);
+        // });
 
-        if ($salons['success']) {
+        $salons = $this->salonsClientService->get(true, 2);
+
+        if (!isset($salons['message'])) {
             return [
-                Salon::createFromArray($salons['salons'][0]),
-                Salon::createFromArray($salons['salons'][1]),
+                Salon::createFromArray($salons[0]),
+                Salon::createFromArray($salons[1]),
             ];
         } else {
             return null;

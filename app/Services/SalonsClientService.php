@@ -14,19 +14,15 @@ class SalonsClientService implements SalonsClientServiceContract
     ) {
     }
 
-    public function getAll()
+    public function get(bool $inRandomOrder = false, int $limit = 0)
     {
         return Http::acceptJson()
             ->withBasicAuth($this->login, $this->password)
-            ->get($this->baseUrl)
-            ->json();
-    }
-
-    public function getTwoRandom()
-    {
-        return Http::acceptJson()
-            ->withBasicAuth($this->login, $this->password)
-            ->get($this->baseUrl . '?limit=2&in_random_order')
+            ->get(
+                $this->baseUrl . '?' .
+                    ($inRandomOrder ? 'in_random_order&' : '') .
+                    ($limit > 0 ? "limit=$limit" : '')
+            )
             ->json();
     }
 }

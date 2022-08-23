@@ -23,5 +23,3 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::apiResource('cars', CarApiController::class, [
     'middleware' => 'shield'
 ]);
-
-Route::middleware('salon')->get('/salons', [SalonApiController::class, 'index']);
