@@ -23,11 +23,9 @@ class SalonsClientRepository implements SalonsClientRepositoryContract
 
     public function getAll()
     {
-        // $salons = Cache::remember('salons_all', 3600, function () {
-        //     return $this->salonsClientService->get();
-        // });
-
-        $salons = $this->salonsClientService->get();
+        $salons = Cache::remember('salons_all', 3600, function () {
+            return $this->salonsClientService->get();
+        });
 
         if (!isset($salons['message'])) {
             $result = array_map(function ($salon) {
@@ -41,11 +39,9 @@ class SalonsClientRepository implements SalonsClientRepositoryContract
 
     public function getTwoRandom()
     {
-        // $salons = Cache::remember('salons_two_rand', 300, function () {
-        //     return $this->salonsClientService->get(true, 2);
-        // });
-
-        $salons = $this->salonsClientService->get(true, 2);
+        $salons = Cache::remember('salons_two_rand', 300, function () {
+            return $this->salonsClientService->get(true, 2);
+        });
 
         if (!isset($salons['message'])) {
             return [
